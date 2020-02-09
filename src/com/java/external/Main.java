@@ -1,6 +1,6 @@
 package com.java.external;
 
-import com.java.external.game.GameController;
+import com.java.external.patterns.mvc.controller.GameController;
 
 public class Main {
 

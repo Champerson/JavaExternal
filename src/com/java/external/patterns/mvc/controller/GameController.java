@@ -1,4 +1,7 @@
-package com.java.external.game;
+package com.java.external.patterns.mvc.controller;
+
+import com.java.external.patterns.mvc.model.GameModel;
+import com.java.external.patterns.mvc.viewer.GameViewer;
 
 import java.util.Scanner;
 

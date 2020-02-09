@@ -1,4 +1,4 @@
-package com.java.external.game;
+package com.java.external.patterns.mvc.statistics;
 
 import java.util.ArrayList;
 import java.util.List;

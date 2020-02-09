@@ -1,4 +1,6 @@
-package com.java.external.game;
+package com.java.external.patterns.mvc.model;
+
+import com.java.external.patterns.mvc.statistics.GameStatistics;
 
 public class GameModel {
 
