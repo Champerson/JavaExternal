@@ -1,20 +1,11 @@
 package com.java.external.game;
 
-
-public class Game {
+public class GameModel {
 
     private int leftBorder;
     private int rightBorder;
     private int guessNumber;
-    private int attempts = 0;
-
-    public Game(int range, int guessNumber) {
-        this.guessNumber = guessNumber;
-    }
-
-    public Game() {
-
-    }
+    private GameStatistics gameStatistics = new GameStatistics();
 
     public int getLeftBorder() {
         return leftBorder;
@@ -38,5 +29,9 @@ public class Game {
 
     public void setGuessNumber(int guessNumber) {
         this.guessNumber = guessNumber;
+    }
+
+    public GameStatistics getGameStatistics() {
+        return gameStatistics;
     }
 }
