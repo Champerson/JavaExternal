@@ -3,7 +3,7 @@
 ## Developer : [Oleh Havrylchenko (Гаврильченко Олег Олегович)](https://github.com/Champerson)
 
 ## ***Task 0*** - [Repository](https://github.com/Champerson/JavaExternal)
- t\ Creation of JavaExternal course repository for practical tasks.
+ Creation of JavaExternal course repository for practical tasks.
 
 ## ***Task 1*** - [T. Shevchenko poem.](https://github.com/Champerson/JavaExternal_team_tasks/tree/master/tasks/poem)
 ###     ***Bonus task*** - [Draw a figure.](https://github.com/Champerson/JavaExternal_team_tasks/tree/master/tasks/geometrical.figures/src/com/java/external)
