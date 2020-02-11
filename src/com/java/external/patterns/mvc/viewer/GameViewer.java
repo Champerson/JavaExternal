@@ -12,6 +12,7 @@ public class GameViewer {
     private static final String NUMBER_OUT_OF_BORDER_INPUTS_TITLE = "Out of border inputs: ";
     private static final String NUMBER_OUT_OF_RANGE_MESSAGE = "Your number in out of range.";
     private static final String AVAILABLE_SEARCH_RANGE_MESSAGE = "Available search range from ";
+    private static final String INCORRECT_USER_DECISION_MESSAGE = "Hey, you want to play or exit?";
     private static final String CONGRATULATION_MESSAGE = "Congratulations, you won the game" + System.lineSeparator();
     private static final String INVALID_INTEGER_INPUT_MESSAGE = "Invalid type, please input an available integer value ";
     private static final String GAME_HEADER_MESSAGE = "Welcome to the guess the number game. " + System.lineSeparator() +
@@ -48,5 +49,9 @@ public class GameViewer {
         for (String attempt : statistics.getAllUserInputs()) {
             System.out.println(attempt);
         }
+    }
+
+    public void printIncorrectUserDecisionMessage() {
+        System.out.println(INCORRECT_USER_DECISION_MESSAGE);
     }
 }

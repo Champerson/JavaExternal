@@ -28,10 +28,12 @@ public class GameController {
         } else if (userInput.equalsIgnoreCase("exit")) {
             return false;
         } else {
-            System.out.println("Hey, you want to play or quit?");
+            gameViewer.printIncorrectUserDecisionMessage();
             return userDecideToPlay(inputScanner);
         }
     }
+
+
 
     private void startGame(Scanner inputScanner) {
         GameModel gameModel = initializeGameSettings();
