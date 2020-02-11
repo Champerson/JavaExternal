@@ -1,6 +1,6 @@
 # JavaExternal
 
-## Developer: [Oleh Havrylchenko (Гаврильченко Олег Олегович)](https://github.com/Champerson)
+## Developer : [Oleh Havrylchenko (Гаврильченко Олег Олегович)](https://github.com/Champerson)
 
 ## ***Task 0 -*** [Repository](https://github.com/Champerson/JavaExternal)
       Creation of JavaExternal course repository for practical tasks.
