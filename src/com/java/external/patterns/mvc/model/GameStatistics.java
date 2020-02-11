@@ -1,4 +1,4 @@
-package com.java.external.patterns.mvc.statistics;
+package com.java.external.patterns.mvc.model;
 
 import java.util.ArrayList;
 import java.util.List;

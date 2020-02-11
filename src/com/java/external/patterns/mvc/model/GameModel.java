@@ -1,7 +1,5 @@
 package com.java.external.patterns.mvc.model;
 
-import com.java.external.patterns.mvc.statistics.GameStatistics;
-
 public class GameModel {
 
     private int leftBorder;

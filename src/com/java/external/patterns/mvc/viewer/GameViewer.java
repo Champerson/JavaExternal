@@ -1,6 +1,6 @@
 package com.java.external.patterns.mvc.viewer;
 
-import com.java.external.patterns.mvc.statistics.GameStatistics;
+import com.java.external.patterns.mvc.model.GameStatistics;
 import com.java.external.patterns.mvc.model.GameModel;
 
 public class GameViewer {
