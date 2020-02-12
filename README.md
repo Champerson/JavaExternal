@@ -11,4 +11,4 @@
       Team task: console output "drawing" of a geometric figure.
 ## ***Task 2 -*** [Guees the number game](https://github.com/Champerson/JavaExternal/tree/master/JavaGaming/src/com/java/external)
 
-## ***Task 3 -*** [Droids war](https://github.com/Champerson/JavaExternal/tree/master/DroidWars/src)
+## ***Task 3 -*** [Droid battles](https://github.com/Champerson/JavaExternal/tree/master/DroidWars/src)
