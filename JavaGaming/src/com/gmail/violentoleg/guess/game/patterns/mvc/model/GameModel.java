@@ -1,4 +1,4 @@
-package com.java.external.patterns.mvc.model;
+package com.gmail.violentoleg.guess.game.patterns.mvc.model;
 
 public class GameModel {
 

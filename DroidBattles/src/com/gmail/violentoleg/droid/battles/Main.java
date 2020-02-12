@@ -1,4 +1,4 @@
-import com.java.external.patterns.mvc.controller.GameController;
+package com.gmail.violentoleg.droid.battles;
 
 public class Main {
 

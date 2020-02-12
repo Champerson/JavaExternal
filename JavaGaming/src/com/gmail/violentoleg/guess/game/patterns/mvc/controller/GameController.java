@@ -1,7 +1,7 @@
-package com.java.external.patterns.mvc.controller;
+package com.gmail.violentoleg.guess.game.patterns.mvc.controller;
 
-import com.java.external.patterns.mvc.model.GameModel;
-import com.java.external.patterns.mvc.viewer.GameViewer;
+import com.gmail.violentoleg.guess.game.patterns.mvc.model.GameModel;
+import com.gmail.violentoleg.guess.game.patterns.mvc.viewer.GameViewer;
 
 import java.util.Scanner;
 
