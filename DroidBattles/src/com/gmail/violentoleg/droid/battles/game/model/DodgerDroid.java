@@ -1,11 +1,14 @@
 package com.gmail.violentoleg.droid.battles.game.model;
 
+import static com.gmail.violentoleg.droid.battles.game.model.DroidType.DEFENDER;
 import static java.lang.Math.random;
 
 public class DodgerDroid extends Droid{
 
+    private static final int DODGE_CHANCE_PERCENTS = 20;
+
     public DodgerDroid(int health, int damage) {
-        super(health, damage);
+        super(health, damage, DEFENDER);
     }
 
     @Override
@@ -13,13 +16,13 @@ public class DodgerDroid extends Droid{
         return this.getDamage();
     }
 
+    @Override
     protected int reduceIncomingDamage(int damage) {
-        int dodgeChance = (int) (random() * 5);
+        return isDodgeApply() ? 0 : damage;
+    }
 
-        if (dodgeChance == 4) {
-            return 0;
-        } else {
-            return damage;
-        }
+    private boolean isDodgeApply() {
+        int dodgeChance = (int) (random() * (100 / DODGE_CHANCE_PERCENTS));
+        return dodgeChance == 0;
     }
 }

@@ -1,11 +1,14 @@
 package com.gmail.violentoleg.droid.battles.game.model;
 
+import static com.gmail.violentoleg.droid.battles.game.model.DroidType.DEFENDER;
 import static java.lang.Math.random;
 
 public class SelfHealDroid extends Droid{
 
+    private static final int HEAL_CHANCE_PERCENTS = 5;
+
     public SelfHealDroid(int health, int damage) {
-        super(health, damage);
+        super(health, damage, DEFENDER);
     }
 
     @Override
@@ -15,12 +18,11 @@ public class SelfHealDroid extends Droid{
 
     @Override
     protected int reduceIncomingDamage(int damage) {
-        int healChance = (int) (random() * 10);
+        return isHealApply() ? -damage : damage;
+    }
 
-        if (healChance == 6) {
-            return -damage;
-        } else {
-            return damage;
-        }
+    private boolean isHealApply() {
+        int healChance = (int) (random() * (100 / HEAL_CHANCE_PERCENTS));
+        return healChance == 0;
     }
 }
