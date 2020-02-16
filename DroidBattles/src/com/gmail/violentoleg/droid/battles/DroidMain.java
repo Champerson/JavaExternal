@@ -2,18 +2,17 @@ package com.gmail.violentoleg.droid.battles;
 
 
 import com.gmail.violentoleg.droid.battles.game.controller.DroidController;
-import com.gmail.violentoleg.droid.battles.game.model.*;
+import com.gmail.violentoleg.droid.battles.game.model.factory.Factory;
+
+import static com.gmail.violentoleg.droid.battles.game.model.DroidType.DAMAGE_DIALER;
+import static com.gmail.violentoleg.droid.battles.game.model.DroidType.TANK;
 
 public class DroidMain {
 
     public static void main(String[] args) {
-        JuggernautDroid juggernautDroid = new JuggernautDroid(400, 30);
-        SelfHealDroid selfHealDroid = new SelfHealDroid(300, 30);
-        SimpleDroid simpleDroid = new SimpleDroid(400, 50);
-        SlayerDroid slayerDroid = new SlayerDroid(250, 50);
-        DodgerDroid dodgerDroid  = new DodgerDroid(300, 40);
+        Factory factory = new Factory();
 
         DroidController droidController = new DroidController();
-        droidController.startBattleOfTwoDroids(juggernautDroid, selfHealDroid);
+        droidController.startBattleOfTwoDroids(factory.droidFactory(TANK), factory.droidFactory(DAMAGE_DIALER));
     }
 }

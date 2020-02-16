@@ -1,6 +1,6 @@
 package com.gmail.violentoleg.droid.battles.game.model;
 
-import static com.gmail.violentoleg.droid.battles.game.model.DroidType.DEFENDER;
+import static com.gmail.violentoleg.droid.battles.game.model.DroidType.HEALER;
 import static java.lang.Math.random;
 
 public class SelfHealDroid extends Droid{
@@ -8,7 +8,7 @@ public class SelfHealDroid extends Droid{
     private static final int HEAL_CHANCE_PERCENTS = 5;
 
     public SelfHealDroid(int health, int damage) {
-        super(health, damage, DEFENDER);
+        super(health, damage, HEALER);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.gmail.violentoleg.droid.battles.game.model;
 
-import static com.gmail.violentoleg.droid.battles.game.model.DroidType.DEFENDER;
+import static com.gmail.violentoleg.droid.battles.game.model.DroidType.TANK;
 import static java.lang.Math.random;
 
 public class JuggernautDroid extends Droid {
@@ -9,7 +9,7 @@ public class JuggernautDroid extends Droid {
     private static final int DAMAGE_REDUCTION_COEFFICIENT = 2;
 
     public JuggernautDroid(int health, int damage) {
-        super(health, damage, DEFENDER);
+        super(health, damage, TANK);
     }
 
     @Override
