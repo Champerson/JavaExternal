@@ -1,10 +1,17 @@
 package com.gmail.violentoleg.droid.battles.game.controller;
-import static com.gmail.violentoleg.droid.battles.game.controller.ConsoleMenuController.Command;
+
+
+import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 public class AdminController {
 
-    public Command showDroidDetails(String droidNumber) {
-        System.out.println(droidNumber + " Droid: { some details}");
-        return Command.M;
+    private ConsoleView consoleView;
+
+    public AdminController(ConsoleView consoleView) {
+        this.consoleView = consoleView;
+    }
+
+    public void showDroidDetails(String droidNumber) {
+        consoleView.showMessage(droidNumber + " Droid: { some details}");
     }
 }

@@ -1,16 +1,16 @@
 package com.gmail.violentoleg.droid.battles.game.controller;
 
 
-import com.gmail.violentoleg.droid.battles.game.dao.InMemoryUserDao;
+import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
 import com.gmail.violentoleg.droid.battles.game.model.user.UserRole;
 
 import java.util.List;
 
 public class AuthenticationManager {
 
-    private InMemoryUserDao userDao;
+    private UserDao userDao;
 
-    public AuthenticationManager(InMemoryUserDao userDao) {
+    public AuthenticationManager(UserDao userDao) {
         this.userDao = userDao;
     }
 

@@ -1,12 +1,16 @@
 package com.gmail.violentoleg.droid.battles.game.model.user;
 
+
+import static com.gmail.violentoleg.droid.battles.game.model.user.UserRole.GUEST;
+
 public class User {
 
     private String login;
     private String pass;
-    private UserRole role = UserRole.USER;
+    private UserRole role;
 
     public User() {
+        role = GUEST;
     }
 
     public User(String login, String pass, UserRole userRole) {
@@ -37,10 +41,5 @@ public class User {
 
     public void setRole(UserRole role) {
         this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "User{-----}";
     }
 }

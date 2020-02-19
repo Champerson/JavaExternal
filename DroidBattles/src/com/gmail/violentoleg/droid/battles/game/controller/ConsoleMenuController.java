@@ -1,46 +1,43 @@
 package com.gmail.violentoleg.droid.battles.game.controller;
 
 
-import com.gmail.violentoleg.droid.battles.game.dao.InMemoryUserDao;
+import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
 import com.gmail.violentoleg.droid.battles.game.model.user.UserRole;
-import com.gmail.violentoleg.droid.battles.game.viewer.View;
+import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 import static com.gmail.violentoleg.droid.battles.game.model.user.UserRole.*;
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
 
 public class ConsoleMenuController {
 
-    private static final String DEFAULT_LANGUAGE_EN = "en";
-    private static final String DEFAULT_COUNTRY_US = "US";
-
-    private ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", new Locale(DEFAULT_LANGUAGE_EN, DEFAULT_COUNTRY_US));
-    private View view = new View(resourceBundle);
     private Scanner userInputScanner = new Scanner(System.in);
-    private static InMemoryUserDao inMemoryUserDao = new InMemoryUserDao();
-    private UserController userController = new UserController(inMemoryUserDao, view);
-    private AuthorizationController authorizationController = new AuthorizationController(inMemoryUserDao, view);
-    private AuthenticationManager authenticationManager = new AuthenticationManager(inMemoryUserDao);
-    private AdminController adminController = new AdminController();
-    private DroidController droidController = new DroidController();
+    private UserDao userDao = new UserDao();
+    private ConsoleView consoleView = new ConsoleView();
+    private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
+    private MessagesController messagesController = new MessagesController(consoleView);
+    private UserController userController = new UserController(messagesController, consoleView, userDao);
+    private AdminController adminController = new AdminController(consoleView);
+    private DroidController droidController = new DroidController(consoleView);
 
-    public enum Command {
+    private enum Command {
         E(),
-        M(),
         R(USER, ADMIN),
-        A(USER, ADMIN),
+        I(USER, ADMIN),
         L(),
         F(ADMIN, GUEST),
-        S(GUEST),
+        A(GUEST),
         D(USER, GUEST),
         O(GUEST);
 
         private UserRole[] restrictions;
 
-        Command(UserRole... restrictions) {
+        Command(UserRole...restrictions) {
             this.restrictions = restrictions;
         }
 
@@ -50,23 +47,18 @@ public class ConsoleMenuController {
     }
 
     public void openMainMenu() {
-        view.printMainMenuOptions(filterAllowedCommands());
+        UserRole userAccess = userController.getCurrentUser().getRole();
+        consoleView.showMessage(format(messagesController.getProperty("menu.options.description"), userAccess));
         String userInput = userInputScanner.nextLine().toUpperCase();
         Command command = getUserInputAsCommand(userInput);
         if (command == null) {
-            view.printInvalidCommand();
-            openMainMenu();
+            consoleView.showError(messagesController.getProperty("error.invalid.command"));
         } else if (!authenticationManager.authenticate(command.getRestrictions())) {
-            view.printNotAllowedCommand();
-            openMainMenu();
+            consoleView.showError(messagesController.getProperty("error.access.denied"));
         } else {
             executeCommand(command);
         }
-    }
-
-    private List<Command> filterAllowedCommands() {
-        UserRole userRole = inMemoryUserDao.getCurrentUser().getRole();
-        return stream(Command.values()).filter(e -> !e.getRestrictions().contains(userRole)).collect(toList());
+        openMainMenu();
     }
 
     private Command getUserInputAsCommand(String userInput) {
@@ -78,95 +70,88 @@ public class ConsoleMenuController {
     }
 
     private void executeCommand(Command command) {
-        Command nextCommand = Command.E;
         switch (command) {
             case E:
                 exit();
                 break;
-            case M:
-                openMainMenu();
-                break;
             case R:
-                nextCommand = openRegistrationForm();
+                openRegistrationForm();
                 break;
-            case A:
-                nextCommand = openAuthorizationForm();
+            case I:
+                openAuthorizationForm();
                 break;
             case L:
-                nextCommand = openChangeLanguageForm();
+                openChangeCountryLanguageForm();
                 break;
             case F:
-                nextCommand = openDroidFightForm();
+                openDroidFightForm();
                 break;
-            case S:
-                nextCommand = showAllDroids();
+            case A:
+                openAllDroidsInfo();
                 break;
             case D:
-                nextCommand = openDroidDetailsForm();
+                openDroidDetailsForm();
                 break;
             case O:
-                nextCommand = openLogoutForm();
+                openLogoutForm();
                 break;
         }
-        executeCommand(nextCommand);
-    }
-
-    private Command showAllDroids() {
-        return Command.M;
-    }
-
-    private Command openDroidDetailsForm() {
-        view.printEnterDroid();
-        String droidNumberInput = userInputScanner.nextLine();
-        return adminController.showDroidDetails(droidNumberInput);
-    }
-
-    private Command openRegistrationForm() {
-        view.printRegistrationMenuOptions();
-        Map.Entry<String, String> credentials = fillInCredentialsForm();
-        return userController.registerUser(credentials.getKey(), credentials.getValue());
-    }
-
-    private Map.Entry<String, String> fillInCredentialsForm() {
-        view.printEnterLogin();
-        String inputLogin = userInputScanner.nextLine();
-        view.printEnterPass();
-        String inputPassword = userInputScanner.nextLine();
-        return new AbstractMap.SimpleEntry<>(inputLogin, inputPassword);
-    }
-
-    private Command openAuthorizationForm() {
-        view.printAuthorizationMenuOptions();
-        Map.Entry<String, String> credentials = fillInCredentialsForm();
-        return authorizationController.logIn(credentials.getKey(), credentials.getValue());
-    }
-
-    private Command openChangeLanguageForm() {
-        view.printLanguageMenuOptions();
-        String userInput = userInputScanner.nextLine();
-        return userController.changeLanguage(userInput);
-    }
-
-    private Command openLogoutForm() {
-        view.printLogoutForm();
-        String userInput = userInputScanner.nextLine();
-        if (userInput.startsWith("y")) {
-            authorizationController.logOut();
-        }
-        return Command.M;
-    }
-
-    private Command openDroidFightForm() {
-        view.printText(droidController.getAllDroids());
-        view.printEnterFirstDroid();
-        String firstDroidInput = userInputScanner.nextLine();
-        view.printEnterSecondDroid();
-        String secondDroidInput = userInputScanner.nextLine();
-        droidController.doFight(firstDroidInput, secondDroidInput);
-        return Command.M;
     }
 
     private void exit() {
         System.exit(0);
+    }
+
+    private void openAllDroidsInfo() {
+        droidController.showAllDroids();
+    }
+
+    private void openDroidDetailsForm() {
+        consoleView.showLabel(messagesController.getProperty("droid.number.label"));
+        String droidNumberInput = userInputScanner.nextLine();
+        adminController.showDroidDetails(droidNumberInput);
+    }
+
+    private void openChangeCountryLanguageForm() {
+        consoleView.showMessage(messagesController.getProperty("language.change.title"));
+        String userInput = userInputScanner.nextLine();
+        messagesController.changeLanguage(userInput);
+    }
+
+    private void openLogoutForm() {
+        consoleView.showMessage(messagesController.getProperty("logout.confirmation.message"));
+        String userInput = userInputScanner.nextLine();
+        if (userInput.startsWith("y")) {
+            userController.logOut();
+        }
+    }
+
+    private void openDroidFightForm() {
+        droidController.showAllDroids();
+        consoleView.showLabel(messagesController.getProperty("droid.number.label"));
+        String firstDroidInput = userInputScanner.nextLine();
+        consoleView.showLabel(messagesController.getProperty("droid.number.label"));
+        String secondDroidInput = userInputScanner.nextLine();
+        droidController.doFight(firstDroidInput, secondDroidInput);
+    }
+
+    private void openRegistrationForm() {
+        consoleView.showMessage(messagesController.getProperty("registration.form.title"));
+        Map.Entry<String, String> credentials = fillInCredentialsForm();
+        userController.registerUser(credentials.getKey(), credentials.getValue());
+    }
+
+    private void openAuthorizationForm() {
+        consoleView.showMessage(messagesController.getProperty("authorization.form.title"));
+        Map.Entry<String, String> credentials = fillInCredentialsForm();
+        userController.authorize(credentials.getKey(), credentials.getValue());
+    }
+
+    private Map.Entry<String, String> fillInCredentialsForm() {
+        consoleView.showLabel(messagesController.getProperty("credentials.form.login.label"));
+        String inputLogin = userInputScanner.nextLine();
+        consoleView.showLabel(messagesController.getProperty("credentials.form.password.label"));
+        String inputPassword = userInputScanner.nextLine();
+        return new AbstractMap.SimpleEntry<>(inputLogin, inputPassword);
     }
 }
