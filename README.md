@@ -9,6 +9,6 @@
       Team task: Writing a poem line-by-line.
 ###     ***Bonus task -*** [Draw a figure.](https://github.com/Champerson/JavaExternal_team_tasks/tree/master/tasks/geometrical.figures/src/com/java/external)
       Team task: console output "drawing" of a geometric figure.
-## ***Task 2 -*** [Guees the number game](https://github.com/Champerson/JavaExternal/tree/master/JavaGaming/src/com/java/external)
+## ***Task 2 -*** [Guees the number game](https://github.com/Champerson/JavaExternal/tree/master/JavaGaming/src/com/gmail/violentoleg/guess/game)
 
-## ***Task 3 -*** [Droid battles](https://github.com/Champerson/JavaExternal/tree/master/DroidWars/src)
+## ***Task 3 -*** [Droid battles](https://github.com/Champerson/JavaExternal/tree/master/DroidBattles)
