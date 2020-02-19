@@ -1,7 +1,7 @@
 package com.gmail.violentoleg.droid.battles.game.viewer;
 
 
-import com.gmail.violentoleg.droid.battles.game.model.Droid;
+import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 
 public class DroidBattleViewer {
 
@@ -29,5 +29,14 @@ public class DroidBattleViewer {
     public void printResultOfRound(Droid firstFighter, Droid secondFighter) {
         System.out.println(FIRST_FIGHTER_HEALTH_TRACK_MESSAGE + firstFighter.getHealth() + System.lineSeparator() +
                 SECOND_FIGHTER_HEALTH_TRACK_MESSAGE + secondFighter.getHealth());
+    }
+
+    public String getAllDroids() {
+        return "All droids: d1, d2, d3";
+    }
+
+    public void doFight(String firstDroidNumber, String secondDroidNumber) {
+        System.out.println("Validation passed");
+        System.out.println("Droid number " + firstDroidNumber + " has won");
     }
 }

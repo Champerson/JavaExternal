@@ -1,6 +1,6 @@
 package com.gmail.violentoleg.droid.battles.game.controller;
 
-import com.gmail.violentoleg.droid.battles.game.model.*;
+import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 import com.gmail.violentoleg.droid.battles.game.viewer.DroidBattleViewer;
 
 public class DroidController {
@@ -19,5 +19,14 @@ public class DroidController {
             }
             viewer.printResultOfRound(firstFighter, secondFighter);
         }
+    }
+
+    public String getAllDroids() {
+        return "All droids: d1, d2, d3";
+    }
+
+    public void doFight(String firstDroidNumber, String secondDroidNumber) {
+        System.out.println("Validation passed");
+        System.out.println("Droid number " + firstDroidNumber + " has won");
     }
 }

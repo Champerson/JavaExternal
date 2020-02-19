@@ -1,6 +1,6 @@
-package com.gmail.violentoleg.droid.battles.game.model;
+package com.gmail.violentoleg.droid.battles.game.model.droids;
 
-import static com.gmail.violentoleg.droid.battles.game.model.DroidType.TANK;
+import static com.gmail.violentoleg.droid.battles.game.model.droids.DroidType.TANK;
 import static java.lang.Math.random;
 
 public class JuggernautDroid extends Droid {

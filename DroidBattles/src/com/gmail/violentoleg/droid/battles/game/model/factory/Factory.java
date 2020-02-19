@@ -1,6 +1,6 @@
 package com.gmail.violentoleg.droid.battles.game.model.factory;
 
-import com.gmail.violentoleg.droid.battles.game.model.*;
+import com.gmail.violentoleg.droid.battles.game.model.droids.*;
 
 public class Factory {
 

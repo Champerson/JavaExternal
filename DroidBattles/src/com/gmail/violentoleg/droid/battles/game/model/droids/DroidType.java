@@ -1,4 +1,4 @@
-package com.gmail.violentoleg.droid.battles.game.model;
+package com.gmail.violentoleg.droid.battles.game.model.droids;
 
 public enum DroidType {
     TANK,

@@ -1,6 +1,6 @@
-package com.gmail.violentoleg.droid.battles.game.model;
+package com.gmail.violentoleg.droid.battles.game.model.droids;
 
-import static com.gmail.violentoleg.droid.battles.game.model.DroidType.DAMAGE_DIALER;
+import static com.gmail.violentoleg.droid.battles.game.model.droids.DroidType.DAMAGE_DIALER;
 import static java.lang.Math.random;
 
 public class SlayerDroid extends Droid {

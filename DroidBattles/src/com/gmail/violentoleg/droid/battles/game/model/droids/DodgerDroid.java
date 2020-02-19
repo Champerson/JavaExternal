@@ -1,9 +1,9 @@
-package com.gmail.violentoleg.droid.battles.game.model;
+package com.gmail.violentoleg.droid.battles.game.model.droids;
 
-import static com.gmail.violentoleg.droid.battles.game.model.DroidType.ASSASSIN;
+import static com.gmail.violentoleg.droid.battles.game.model.droids.DroidType.ASSASSIN;
 import static java.lang.Math.random;
 
-public class DodgerDroid extends Droid{
+public class DodgerDroid extends Droid {
 
     private static final int DODGE_CHANCE_PERCENTS = 20;
 
