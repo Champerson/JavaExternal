@@ -1,12 +1,10 @@
 package com.gmail.violentoleg.droid.battles.game.controller;
 
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
-import com.gmail.violentoleg.droid.battles.game.viewer.DroidBattleViewer;
 
 public class DroidController {
 
     private ConsoleView consoleView;
-    private DroidBattleViewer viewer = new DroidBattleViewer();
 
     public DroidController(ConsoleView consoleView) {
         this.consoleView = consoleView;

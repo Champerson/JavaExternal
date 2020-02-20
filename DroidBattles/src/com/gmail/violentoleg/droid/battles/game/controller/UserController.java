@@ -10,6 +10,8 @@ import static java.lang.String.format;
 
 public class UserController {
 
+    //SHOULD REDO
+    private BattleController battleController = new BattleController();
     private MessagesController messagesController;
     private ConsoleView consoleView;
     private UserDao userDao;
@@ -60,5 +62,10 @@ public class UserController {
     public void logOut() {
         userDao.saveCurrentUser(new User());
         consoleView.showMessage(messagesController.getProperty("logout.successful.message"));
+    }
+
+    //SHOULD REDO
+    public void chooseDroidToBet(int droidToBet) {
+        battleController.setDroidUserBet(droidToBet);
     }
 }
