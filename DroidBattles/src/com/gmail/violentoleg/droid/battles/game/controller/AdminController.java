@@ -1,60 +1,68 @@
 package com.gmail.violentoleg.droid.battles.game.controller;
 
 
+import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
+import com.gmail.violentoleg.droid.battles.game.model.Duel;
 import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
+import static com.gmail.violentoleg.droid.battles.game.model.droids.DroidType.*;
+
 public class AdminController {
 
+    private Duel duel;
+    private DroidDao droidDao;
     private ConsoleView consoleView;
-    //SHOULD REDO
-    private BattleController battleController = new BattleController();
 
-    public AdminController(ConsoleView consoleView) {
+    public AdminController(ConsoleView consoleView, DroidDao droidDao) {
         this.consoleView = consoleView;
+        this.droidDao = droidDao;
     }
 
     public void showDroidDetails(String droidNumber) {
-        consoleView.showMessage(droidNumber + " Droid: { some details}");
+        droidDao.createNewDroid(DAMAGE_DIALER);
+        droidDao.createNewDroid(HEALER);
+        droidDao.createNewDroid(TANK);
+        droidDao.createNewDroid(STANDARD);
+        droidDao.createNewDroid(ASSASSIN);
+        consoleView.showMessage(droidDao.getAllDroids().get(Integer.parseInt(droidNumber)).toString());
     }
 
-    //SHOULD REDO
-    public void addDroidToTheBattle(Droid droid, BattleController battleController, int fighter) {
+    public void addDroidToTheDuel(Droid droid, Duel duel, int fighter) {
         if (fighter == 1 || fighter == 2) {
-            if (fighter == 1 && battleController.getFirstFighter() != null) {
-                battleController.setFirstFighter(droid);
-            } else if (fighter == 2 && battleController.getSecondFighter() != null) {
-                battleController.setSecondFighter(droid);
+            if (fighter == 1 && duel.getFirstFighter() != null) {
+                duel.setFirstFighter(droid);
+            } else if (fighter == 2 && duel.getSecondFighter() != null) {
+                duel.setSecondFighter(droid);
             } else {
-                System.out.println("The fighter’s place is already taken");
+                consoleView.showMessage("The fighter’s place is already taken");
             }
         } else {
-            System.out.println("Unsupported ex int addDroidToTheBattle method");
+            consoleView.showError("Unsupported exception in addDroidToTheBattle method");
         }
     }
 
-    //SHOULD REDO
-    public void deleteDroidFromBattle(int droidToDelete) {
+    public void removeParticipantFromDuel(int droidToDelete) {
         if (droidToDelete == 1 || droidToDelete == 2) {
-            if (droidToDelete == 1 && battleController.getFirstFighter() != null) {
-                battleController.setFirstFighter(null);
-            } else if(droidToDelete == 2 && battleController.getSecondFighter() != null) {
-                battleController.setSecondFighter(null);
+            if (droidToDelete == 1 && duel.getFirstFighter() != null) {
+                duel.setFirstFighter(null);
+            } else if(droidToDelete == 2 && duel.getSecondFighter() != null) {
+                duel.setSecondFighter(null);
             }
         } else {
-            System.out.println("Unsupported exception in deleteDroidFromBattle");
+            consoleView.showError("Unsupported exception in deleteDroidFromBattle");
         }
     }
 
-    public void replaceDroidInBattle(int droidToReplace, Droid droid) {
+    public void replaceParticipantOfTheDuel(int droidToReplace, Droid droid) {
         if (droidToReplace == 1 || droidToReplace == 2) {
             if (droidToReplace == 1) {
-                battleController.setFirstFighter(droid);
+                duel.setFirstFighter(droid);
             } else if(droidToReplace == 2) {
-                battleController.setSecondFighter(droid);
+                duel.setSecondFighter(droid);
             }
         } else {
-            System.out.println("Unsupported exception in replaceDroidInBattle");
+            consoleView.showError("Unsupported exception in replaceDroidInBattle");
         }
     }
 }

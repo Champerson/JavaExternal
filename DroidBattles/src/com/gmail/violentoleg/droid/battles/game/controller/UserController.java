@@ -5,21 +5,23 @@ import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
 import com.gmail.violentoleg.droid.battles.game.model.user.User;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
+
+import static com.gmail.violentoleg.droid.battles.game.controller.validator.Validator.validateCredentials;
 import static com.gmail.violentoleg.droid.battles.game.model.user.UserRole.USER;
 import static java.lang.String.format;
 
 public class UserController {
 
-    //SHOULD REDO
-    private BattleController battleController = new BattleController();
-    private MessagesController messagesController;
-    private ConsoleView consoleView;
     private UserDao userDao;
+    DroidController droidController;
+    private ConsoleView consoleView;
+    private MessagesController messagesController;
 
-    public UserController(MessagesController messagesController, ConsoleView consoleView, UserDao userDao) {
-        this.messagesController = messagesController;
-        this.consoleView = consoleView;
+    public UserController(MessagesController messagesController, ConsoleView consoleView, UserDao userDao, DroidController droidController) {
         this.userDao = userDao;
+        this.consoleView = consoleView;
+        this.droidController = droidController;
+        this.messagesController = messagesController;
     }
 
     public User getCurrentUser() {
@@ -27,7 +29,7 @@ public class UserController {
     }
 
     public void registerUser(String login, String pass) {
-        if (!validate(login, pass)) {
+        if (!validateCredentials(login, pass)) {
             consoleView.showError(messagesController.getProperty("error.invalid.input"));
         } else if (userDao.getAllUsers().containsKey(login)) {
             consoleView.showError(format(messagesController.getProperty("error.registration.user.exist"), login));
@@ -42,7 +44,7 @@ public class UserController {
     }
 
     public void authorize(String login, String pass) {
-        if (!validate(login, pass)) {
+        if (!validateCredentials(login, pass)) {
             consoleView.showError(messagesController.getProperty("error.invalid.input"));
         } else {
             User user = userDao.getAllUsers().get(login);
@@ -55,17 +57,12 @@ public class UserController {
         }
     }
 
-    private boolean validate(String login, String pass) {
-        return login != null && !login.isEmpty() && pass != null && !pass.isEmpty();
-    }
-
     public void logOut() {
         userDao.saveCurrentUser(new User());
         consoleView.showMessage(messagesController.getProperty("logout.successful.message"));
     }
 
-    //SHOULD REDO
-    public void chooseDroidToBet(int droidToBet) {
-        battleController.setDroidUserBet(droidToBet);
+    public void betOnDroid(int droidToBet) {
+
     }
 }

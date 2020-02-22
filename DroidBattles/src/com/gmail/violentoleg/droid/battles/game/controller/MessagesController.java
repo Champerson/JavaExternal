@@ -22,7 +22,7 @@ public class MessagesController {
 
     public String getProperty(String key) {
         try {
-            return new String(resourceBundle.getString(key).getBytes("ISO8859-1"));
+            return new String(resourceBundle.getString(key).getBytes("cp1251"));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package com.gmail.violentoleg.droid.battles.game.controller;
 
 
+import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
 import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
 import com.gmail.violentoleg.droid.battles.game.model.user.UserRole;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
@@ -16,14 +17,15 @@ import static java.util.Arrays.asList;
 
 public class ConsoleMenuController {
 
-    private Scanner userInputScanner = new Scanner(System.in);
     private UserDao userDao = new UserDao();
+    private DroidDao droidDao = new DroidDao();
     private ConsoleView consoleView = new ConsoleView();
-    private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
-    private MessagesController messagesController = new MessagesController(consoleView);
-    private UserController userController = new UserController(messagesController, consoleView, userDao);
-    private AdminController adminController = new AdminController(consoleView);
+    private Scanner userInputScanner = new Scanner(System.in);
     private DroidController droidController = new DroidController(consoleView);
+    private MessagesController messagesController = new MessagesController(consoleView);
+    private AdminController adminController = new AdminController(consoleView, droidDao);
+    private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
+    private UserController userController = new UserController(messagesController, consoleView, userDao, droidController);
 
     private enum Command {
         E(),

@@ -1,5 +1,6 @@
 package com.gmail.violentoleg.droid.battles.game.model.factory;
 
+import com.gmail.violentoleg.droid.battles.game.model.Duel;
 import com.gmail.violentoleg.droid.battles.game.model.droids.*;
 
 public class Factory {
@@ -19,5 +20,9 @@ public class Factory {
             default:
                 throw new IllegalArgumentException("Wrong droid type: " + type);
         }
+    }
+
+    public Duel duelFactory() {
+        return new Duel();
     }
 }
