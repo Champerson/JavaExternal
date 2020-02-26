@@ -44,7 +44,7 @@ public abstract class Droid {
 
     @Override
     public String toString() {
-        return "\n Droid: " + getClass().getSimpleName() + " [" + type + "]" +
+        return " Droid: " + getClass().getSimpleName() + " [" + type + "]" +
                 "\n health: " + health +
                 "\n damage: " + damage;
     }

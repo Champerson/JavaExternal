@@ -8,35 +8,27 @@ import com.gmail.violentoleg.droid.battles.game.viewer.DroidViewer;
 public class DroidController {
 
     private Duel duel;
-    private ConsoleView consoleView;
     private DroidViewer viewer;
+    private ConsoleView consoleView;
 
-    public DroidController(ConsoleView consoleView/*, DroidViewer viewer, Duel duel*/) {
+    public DroidController(ConsoleView consoleView, DroidViewer viewer) {
         this.consoleView = consoleView;
-        //this.viewer = viewer;
-        //this.duel = duel;
+        this.viewer = viewer;
     }
 
-    public void showAllDroids() {
-        consoleView.showMessage("All droids: d1, d2");
-    }
-
-    public void doFight(String firstDroidNumber, String secondDroidNumber) {
-        consoleView.showMessage("...Fighting... " + firstDroidNumber + " has won");
-    }
-
-    //SHOULD TO REFACTOR
-    public void startDuel(Droid firstFighter, Droid secondFighter) {
+    public void startDuel(Duel duel) {
         int round = 1;
-        viewer.printDroidBattleHeader(firstFighter, secondFighter);
+        viewer.printDroidBattleHeader(duel.getFirstFighter(), duel.getSecondFighter());
 
-        while (firstFighter.isAlive() && secondFighter.isAlive()) {
+        while (duel.getFirstFighter().isAlive() && duel.getSecondFighter().isAlive()) {
             viewer.printTitleOfRound(round++);
-            firstFighter.giveDamage(secondFighter);
-            if (secondFighter.isAlive()) {
-                secondFighter.giveDamage(firstFighter);
+            duel.getFirstFighter().giveDamage(duel.getSecondFighter());
+            if (duel.getSecondFighter().isAlive()) {
+                duel.getSecondFighter().giveDamage(duel.getFirstFighter());
             }
-            viewer.printResultOfRound(firstFighter, secondFighter);
+            viewer.printResultOfRound(duel.getFirstFighter(), duel.getSecondFighter());
         }
+
+        //viewer.printResultOfTheDuel(duel.getWinner());
     }
 }

@@ -6,26 +6,24 @@ import com.gmail.violentoleg.droid.battles.game.model.Duel;
 import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
-import static com.gmail.violentoleg.droid.battles.game.model.droids.DroidType.*;
-
 public class AdminController {
 
     private Duel duel;
     private DroidDao droidDao;
     private ConsoleView consoleView;
 
-    public AdminController(ConsoleView consoleView, DroidDao droidDao) {
+    public AdminController(ConsoleView consoleView, DroidDao droidDao, Duel duel) {
         this.consoleView = consoleView;
         this.droidDao = droidDao;
+        this.duel = duel;
     }
 
     public void showDroidDetails(String droidNumber) {
-        droidDao.createNewDroid(DAMAGE_DIALER);
-        droidDao.createNewDroid(HEALER);
-        droidDao.createNewDroid(TANK);
-        droidDao.createNewDroid(STANDARD);
-        droidDao.createNewDroid(ASSASSIN);
-        consoleView.showMessage(droidDao.getAllDroids().get(Integer.parseInt(droidNumber)).toString());
+        if (droidDao.getAllDroids().size() < 1) {
+            System.out.println("Droids are not created yet");
+        } else {
+            consoleView.showMessage(droidDao.getAllDroids().get(Integer.parseInt(droidNumber)).toString());
+        }
     }
 
     public void addDroidToTheDuel(Droid droid, Duel duel, int fighter) {
@@ -42,11 +40,11 @@ public class AdminController {
         }
     }
 
-    public void removeParticipantFromDuel(int droidToDelete) {
-        if (droidToDelete == 1 || droidToDelete == 2) {
-            if (droidToDelete == 1 && duel.getFirstFighter() != null) {
+    public void removeParticipantFromDuel(int droidToRemove) {
+        if (droidToRemove == 1 || droidToRemove == 2) {
+            if (droidToRemove == 1 && duel.getFirstFighter() != null) {
                 duel.setFirstFighter(null);
-            } else if(droidToDelete == 2 && duel.getSecondFighter() != null) {
+            } else if(droidToRemove == 2 && duel.getSecondFighter() != null) {
                 duel.setSecondFighter(null);
             }
         } else {

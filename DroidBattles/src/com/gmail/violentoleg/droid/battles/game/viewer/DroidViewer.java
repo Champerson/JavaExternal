@@ -30,4 +30,8 @@ public class DroidViewer {
         System.out.println(FIRST_FIGHTER_HEALTH_TRACK_MESSAGE + firstFighter.getHealth() + System.lineSeparator() +
                 SECOND_FIGHTER_HEALTH_TRACK_MESSAGE + secondFighter.getHealth());
     }
+
+    public void printResultOfTheDuel(Droid winnerDroid) {
+        System.out.println("Droid " + winnerDroid + " has won");
+    }
 }

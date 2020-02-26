@@ -4,7 +4,7 @@ import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 
 public class Duel {
 
-    private int userBet;
+    private Droid userBet;
     private Droid winner;
     private Droid firstFighter;
     private Droid secondFighter;
@@ -34,11 +34,11 @@ public class Duel {
         this.secondFighter = secondFighter;
     }
 
-    public int getUserBet() {
+    public Droid getUserBet() {
         return userBet;
     }
 
-    public void setUserBet(int userBet) {
+    public void setUserBet(Droid userBet) {
         this.userBet = userBet;
     }
 
@@ -48,5 +48,12 @@ public class Duel {
 
     public void setWinner(Droid winner) {
         this.winner = winner;
+    }
+
+    @Override
+    public String toString() {
+        return "Duel :" + System.lineSeparator() +
+                "Participants :" + System.lineSeparator() +
+                firstFighter + " VS " + secondFighter;
     }
 }

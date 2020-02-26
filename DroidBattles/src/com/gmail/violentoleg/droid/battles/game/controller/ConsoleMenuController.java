@@ -2,9 +2,12 @@ package com.gmail.violentoleg.droid.battles.game.controller;
 
 
 import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
+import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
 import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
+import com.gmail.violentoleg.droid.battles.game.model.Duel;
 import com.gmail.violentoleg.droid.battles.game.model.user.UserRole;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+import com.gmail.violentoleg.droid.battles.game.viewer.DroidViewer;
 
 import java.util.AbstractMap;
 import java.util.List;
@@ -17,13 +20,16 @@ import static java.util.Arrays.asList;
 
 public class ConsoleMenuController {
 
+    private Duel duel = new Duel(); // NEV NEV NEV NEV NEV NEV NEV NEV
+    private DuelDao duelDao = new DuelDao(); // NEV NEV NEV NEV NEV NEV NEV NEV
+    private DroidDao droidDao = new DroidDao(); // NEV NEV NEV NEV NEV NEV NEV NEV
+    private DroidViewer droidViewer = new DroidViewer(); // NEV NEV NEV NEV NEV NEV NEV
     private UserDao userDao = new UserDao();
-    private DroidDao droidDao = new DroidDao();
     private ConsoleView consoleView = new ConsoleView();
     private Scanner userInputScanner = new Scanner(System.in);
-    private DroidController droidController = new DroidController(consoleView);
+    private DroidController droidController = new DroidController(consoleView, droidViewer);
     private MessagesController messagesController = new MessagesController(consoleView);
-    private AdminController adminController = new AdminController(consoleView, droidDao);
+    private AdminController adminController = new AdminController(consoleView, droidDao, duel);
     private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
     private UserController userController = new UserController(messagesController, consoleView, userDao, droidController);
 
@@ -31,11 +37,20 @@ public class ConsoleMenuController {
         E(),
         R(USER, ADMIN),
         I(USER, ADMIN),
+        O(GUEST),
         L(),
-        F(ADMIN, GUEST),
+        M(USER, GUEST),
+        D(GUEST),
         A(GUEST),
-        D(USER, GUEST),
-        O(GUEST);
+        S(ADMIN, GUEST),
+        Q(GUEST),
+        Z(USER, GUEST),
+        X(USER, GUEST),
+        C(USER, GUEST),
+        V(USER, GUEST),
+        F(ADMIN, GUEST),
+        G(USER, GUEST),
+        U(GUEST);
 
         private UserRole[] restrictions;
 
@@ -91,8 +106,8 @@ public class ConsoleMenuController {
             case A:
                 openAllDroidsInfo();
                 break;
-            case D:
-                openDroidDetailsForm();
+            case M:
+                openAdminSettingsMenu();
                 break;
             case O:
                 openLogoutForm();
@@ -105,11 +120,11 @@ public class ConsoleMenuController {
     }
 
     private void openAllDroidsInfo() {
-        droidController.showAllDroids();
+        droidDao.showAllDroids();
     }
 
-    private void openDroidDetailsForm() {
-        consoleView.showLabel(messagesController.getProperty("droid.number.label"));
+    private void openAdminSettingsMenu() {
+        consoleView.showLabel(messagesController.getProperty("admin.settings.menu.title"));
         String droidNumberInput = userInputScanner.nextLine();
         adminController.showDroidDetails(droidNumberInput);
     }
@@ -129,12 +144,11 @@ public class ConsoleMenuController {
     }
 
     private void openDroidFightForm() {
-        droidController.showAllDroids();
-        consoleView.showLabel(messagesController.getProperty("droid.number.label"));
-        String firstDroidInput = userInputScanner.nextLine();
-        consoleView.showLabel(messagesController.getProperty("droid.number.label"));
-        String secondDroidInput = userInputScanner.nextLine();
-        droidController.doFight(firstDroidInput, secondDroidInput);
+        //consoleView.showLabel(messagesController.getProperty("droid.number.label"));
+        //String firstDroidInput = userInputScanner.nextLine();
+        //consoleView.showLabel(messagesController.getProperty("droid.number.label"));
+        //String secondDroidInput = userInputScanner.nextLine();
+        droidController.startDuel(new Duel(droidDao.getAllDroids().get(3), droidDao.getAllDroids().get(2)));
     }
 
     private void openRegistrationForm() {

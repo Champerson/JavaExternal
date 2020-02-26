@@ -9,10 +9,17 @@ import java.util.List;
 
 import static com.gmail.violentoleg.droid.battles.game.model.droids.DroidType.*;
 
+
 public class DroidDao {
 
     Factory droidFactory = new Factory();
-    private List<Droid> allDroids = new ArrayList<>();
+    private List<Droid> allDroids = new ArrayList<Droid>() {{
+        add(droidFactory.droidFactory(STANDARD));
+        add(droidFactory.droidFactory(TANK));
+        add(droidFactory.droidFactory(DAMAGE_DIALER));
+        add(droidFactory.droidFactory(HEALER));
+        add(droidFactory.droidFactory(ASSASSIN));
+    }};
 
     public void createNewDroid(DroidType droidType) {
         allDroids.add(droidFactory.droidFactory(droidType));
@@ -22,11 +29,11 @@ public class DroidDao {
         return allDroids;
     }
 
-    public void showListOfAvailableDroids() {
-        int droidNumber = 1;
+    public void showAllDroids() {
+        int droidNumber = 0;
 
         for (Droid droid : allDroids) {
-            System.out.println(droidNumber+ " - " + droid.toString());
+            System.out.println(droidNumber + " - " + droid.toString());
             droidNumber++;
         }
     }
