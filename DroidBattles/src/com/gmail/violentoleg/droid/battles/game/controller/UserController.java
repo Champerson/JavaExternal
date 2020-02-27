@@ -13,14 +13,12 @@ import static java.lang.String.format;
 public class UserController {
 
     private UserDao userDao;
-    DroidController droidController;
     private ConsoleView consoleView;
     private MessagesController messagesController;
 
-    public UserController(MessagesController messagesController, ConsoleView consoleView, UserDao userDao, DroidController droidController) {
+    public UserController(MessagesController messagesController, ConsoleView consoleView, UserDao userDao) {
         this.userDao = userDao;
         this.consoleView = consoleView;
-        this.droidController = droidController;
         this.messagesController = messagesController;
     }
 

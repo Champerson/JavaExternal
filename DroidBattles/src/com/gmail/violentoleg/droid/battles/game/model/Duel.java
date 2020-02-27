@@ -52,8 +52,8 @@ public class Duel {
 
     @Override
     public String toString() {
-        return "Duel :" + System.lineSeparator() +
+        return "\nDuel ¹%s:" + System.lineSeparator() +
                 "Participants :" + System.lineSeparator() +
-                firstFighter + " VS " + secondFighter;
+                firstFighter + "\n VS \n"  + secondFighter;
     }
 }

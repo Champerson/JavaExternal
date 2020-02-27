@@ -1,5 +1,8 @@
 package com.gmail.violentoleg.droid.battles.game.controller.validator;
 
+import com.gmail.violentoleg.droid.battles.game.controller.ConsoleMenuController;
+import javafx.scene.web.HTMLEditorSkin;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

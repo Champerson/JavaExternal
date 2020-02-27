@@ -4,10 +4,8 @@ package com.gmail.violentoleg.droid.battles.game.controller;
 import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
 import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
 import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
-import com.gmail.violentoleg.droid.battles.game.model.Duel;
 import com.gmail.violentoleg.droid.battles.game.model.user.UserRole;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
-import com.gmail.violentoleg.droid.battles.game.viewer.DroidViewer;
 
 import java.util.AbstractMap;
 import java.util.List;
@@ -20,18 +18,16 @@ import static java.util.Arrays.asList;
 
 public class ConsoleMenuController {
 
-    private Duel duel = new Duel(); // NEV NEV NEV NEV NEV NEV NEV NEV
-    private DuelDao duelDao = new DuelDao(); // NEV NEV NEV NEV NEV NEV NEV NEV
-    private DroidDao droidDao = new DroidDao(); // NEV NEV NEV NEV NEV NEV NEV NEV
-    private DroidViewer droidViewer = new DroidViewer(); // NEV NEV NEV NEV NEV NEV NEV
     private UserDao userDao = new UserDao();
+    private DroidDao droidDao = new DroidDao();
     private ConsoleView consoleView = new ConsoleView();
+    private DuelDao duelDao = new DuelDao(consoleView);
     private Scanner userInputScanner = new Scanner(System.in);
-    private DroidController droidController = new DroidController(consoleView, droidViewer);
     private MessagesController messagesController = new MessagesController(consoleView);
-    private AdminController adminController = new AdminController(consoleView, droidDao, duel);
     private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
-    private UserController userController = new UserController(messagesController, consoleView, userDao, droidController);
+    private AdminController adminController = new AdminController(consoleView, droidDao, duelDao);
+    private UserController userController = new UserController(messagesController, consoleView, userDao);
+    private DuelController duelController = new DuelController(messagesController, consoleView, duelDao, droidDao);
 
     private enum Command {
         E(),
@@ -50,7 +46,7 @@ public class ConsoleMenuController {
         V(USER, GUEST),
         F(ADMIN, GUEST),
         G(USER, GUEST),
-        U(GUEST);
+        U(ADMIN, GUEST);
 
         private UserRole[] restrictions;
 
@@ -61,22 +57,29 @@ public class ConsoleMenuController {
         List<UserRole> getRestrictions() {
             return asList(restrictions);
         }
-    }
 
+    }
     public void openMainMenu() {
         UserRole userAccess = userController.getCurrentUser().getRole();
         consoleView.showMessage(format(messagesController.getProperty("menu.options.description"), userAccess));
-        String userInput = userInputScanner.nextLine().toUpperCase();
-        Command command = getUserInputAsCommand(userInput);
-        if (command == null) {
-            consoleView.showError(messagesController.getProperty("error.invalid.command"));
-        } else if (!authenticationManager.authenticate(command.getRestrictions())) {
-            consoleView.showError(messagesController.getProperty("error.access.denied"));
-        } else {
-            executeCommand(command);
-        }
+        validateCommand();
         openMainMenu();
     }
+
+    private void openAdminMenu() {
+        UserRole userAccess = userController.getCurrentUser().getRole();
+        consoleView.showMessage(format(messagesController.getProperty("admin.settings.menu.title"), userAccess));
+        validateCommand();
+        openAdminMenu();
+    }
+
+    private void openUserMenu() {
+        UserRole userAccess = userController.getCurrentUser().getRole();
+        consoleView.showMessage(format(messagesController.getProperty("user.menu.title"), userAccess));
+        validateCommand();
+        openUserMenu();
+    }
+
 
     private Command getUserInputAsCommand(String userInput) {
         try {
@@ -107,10 +110,37 @@ public class ConsoleMenuController {
                 openAllDroidsInfo();
                 break;
             case M:
-                openAdminSettingsMenu();
+                openAdminMenu();
                 break;
             case O:
                 openLogoutForm();
+                break;
+            case U:
+                openUserMenu();
+                break;
+            case Q:
+                back();
+                break;
+            case Z:
+                openAddParticipantForm();
+                break;
+            case X:
+                openRemoveParticipantForm();
+                break;
+            case C:
+                openReplaceParticipantForm();
+                break;
+            case D:
+                openAllDuelsInfo();
+                break;
+            case G:
+                openAddDuelForm();
+                break;
+            case V:
+                openRemoveDuelForm();
+                break;
+            case S:
+                openUserBetForm();
                 break;
         }
     }
@@ -123,32 +153,27 @@ public class ConsoleMenuController {
         droidDao.showAllDroids();
     }
 
-    private void openAdminSettingsMenu() {
-        consoleView.showLabel(messagesController.getProperty("admin.settings.menu.title"));
-        String droidNumberInput = userInputScanner.nextLine();
-        adminController.showDroidDetails(droidNumberInput);
+    private void openAllDuelsInfo() {
+        duelDao.showAllDuels();
     }
 
     private void openChangeCountryLanguageForm() {
-        consoleView.showMessage(messagesController.getProperty("language.change.title"));
-        String userInput = userInputScanner.nextLine();
+        String userInput = getUserInputWithLabel("language.change.title");
         messagesController.changeLanguage(userInput);
     }
 
     private void openLogoutForm() {
-        consoleView.showMessage(messagesController.getProperty("logout.confirmation.message"));
-        String userInput = userInputScanner.nextLine();
+        String userInput = getUserInputWithLabel("logout.confirmation.message");
         if (userInput.startsWith("y")) {
             userController.logOut();
         }
     }
 
     private void openDroidFightForm() {
-        //consoleView.showLabel(messagesController.getProperty("droid.number.label"));
-        //String firstDroidInput = userInputScanner.nextLine();
-        //consoleView.showLabel(messagesController.getProperty("droid.number.label"));
-        //String secondDroidInput = userInputScanner.nextLine();
-        droidController.startDuel(new Duel(droidDao.getAllDroids().get(3), droidDao.getAllDroids().get(2)));
+        String userInput = getUserInputWithLabel("duel.number.label");
+        consoleView.showMessage(format(messagesController.getProperty("duel.header.message"), duelDao.getAllDuels().get(Integer.parseInt(userInput)).getFirstFighter(), duelDao.getAllDuels().get(Integer.parseInt(userInput)).getSecondFighter()));
+
+        duelController.startDuel(duelDao.getAllDuels().get(Integer.parseInt(userInput)));
     }
 
     private void openRegistrationForm() {
@@ -164,10 +189,64 @@ public class ConsoleMenuController {
     }
 
     private Map.Entry<String, String> fillInCredentialsForm() {
-        consoleView.showLabel(messagesController.getProperty("credentials.form.login.label"));
-        String inputLogin = userInputScanner.nextLine();
-        consoleView.showLabel(messagesController.getProperty("credentials.form.password.label"));
-        String inputPassword = userInputScanner.nextLine();
+        String inputLogin = getUserInputWithLabel("credentials.form.login.label");
+        String inputPassword = getUserInputWithLabel("credentials.form.password.label");
         return new AbstractMap.SimpleEntry<>(inputLogin, inputPassword);
+    }
+
+    private void back() {
+        openMainMenu();
+    }
+
+    private void openAddParticipantForm() {
+        String userInputParticipantNumber = getUserInputWithLabel("admin.form.participant.label");
+        String userInputDuelNumber = getUserInputWithLabel("admin.form.duel.label");
+        String userInputDroidNumber = getUserInputWithLabel("admin.form.droid.label");
+        adminController.addDroidToTheDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber) ,Integer.parseInt(userInputDroidNumber));
+    }
+
+    private void openRemoveParticipantForm() {
+        String userInputParticipantNumber = getUserInputWithLabel("admin.form.participant.label");
+        String userInputDuelNumber = getUserInputWithLabel("admin.form.duel.label");
+        adminController.removeParticipantFromDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber));
+    }
+
+    private void openReplaceParticipantForm() {
+        String userInputParticipantNumber = getUserInputWithLabel("admin.form.participant.label");
+        String userInputDuelNumber = getUserInputWithLabel("admin.form.duel.label");
+        String userInputDroidNumber = getUserInputWithLabel("admin.form.droid.label");
+        adminController.replaceParticipantOfTheDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber) ,Integer.parseInt(userInputDroidNumber));
+    }
+
+    private void openAddDuelForm() {
+        String userInputFirstDroidNumber = getUserInputWithLabel("admin.form.droid.label");
+        String userInputSecondDroidNumber = getUserInputWithLabel("admin.form.droid.label");
+        duelController.registerDuel(Integer.parseInt(userInputFirstDroidNumber), Integer.parseInt(userInputSecondDroidNumber));
+    }
+
+    private void openRemoveDuelForm() {
+        String userInputDuelNumber = getUserInputWithLabel("duel.number.label");
+        duelController.removeDuel(duelDao.getAllDuels().get(Integer.parseInt(userInputDuelNumber)));
+    }
+
+    private void openUserBetForm() {
+
+    }
+
+    private String getUserInputWithLabel(String key) {
+        consoleView.showLabel(messagesController.getProperty(key));
+        return userInputScanner.nextLine();
+    }
+
+    private void validateCommand() {
+        String userInput = userInputScanner.nextLine().toUpperCase();
+        Command command = getUserInputAsCommand(userInput);
+        if (command == null) {
+            consoleView.showError(messagesController.getProperty("error.invalid.command"));
+        } else if (!authenticationManager.authenticate(command.getRestrictions())) {
+            consoleView.showError(messagesController.getProperty("error.access.denied"));
+        } else {
+            executeCommand(command);
+        }
     }
 }
