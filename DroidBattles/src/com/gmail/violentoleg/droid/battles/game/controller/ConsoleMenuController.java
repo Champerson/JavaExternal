@@ -158,7 +158,8 @@ public class ConsoleMenuController {
     }
 
     private void openChangeCountryLanguageForm() {
-        String userInput = getUserInputWithLabel("language.change.title");
+        consoleView.showMessage(messagesController.getProperty("language.change.title"));
+        String userInput = userInputScanner.nextLine();
         messagesController.changeLanguage(userInput);
     }
 

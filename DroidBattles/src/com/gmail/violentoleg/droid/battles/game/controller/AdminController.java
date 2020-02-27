@@ -3,8 +3,6 @@ package com.gmail.violentoleg.droid.battles.game.controller;
 
 import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
 import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
-import com.gmail.violentoleg.droid.battles.game.model.Duel;
-import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 public class AdminController {
@@ -18,14 +16,6 @@ public class AdminController {
         this.droidDao = droidDao;
         this.duelDao = duelDao;
     }
-
-    /*public void showDroidDetails(String droidNumber) {
-        if (droidDao.getAllDroids().size() < 1) {
-            System.out.println("Droids are not created yet");
-        } else {
-            consoleView.showMessage(droidDao.getAllDroids().get(Integer.parseInt(droidNumber)).toString());
-        }
-    }*/
 
     public void addDroidToTheDuel(int fighter, int duel, int droid) {
         if (fighter == 1 || fighter == 2) {
