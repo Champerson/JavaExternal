@@ -1,10 +1,10 @@
 package com.gmail.violentoleg.droid.battles.game.controller;
 
 
+import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
 import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
 import com.gmail.violentoleg.droid.battles.game.model.user.User;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
-
 
 import static com.gmail.violentoleg.droid.battles.game.controller.validator.Validator.validateCredentials;
 import static com.gmail.violentoleg.droid.battles.game.model.user.UserRole.USER;
@@ -13,11 +13,13 @@ import static java.lang.String.format;
 public class UserController {
 
     private UserDao userDao;
+    private DuelDao duelDao;
     private ConsoleView consoleView;
     private MessagesController messagesController;
 
-    public UserController(MessagesController messagesController, ConsoleView consoleView, UserDao userDao) {
+    public UserController(MessagesController messagesController, ConsoleView consoleView, UserDao userDao, DuelDao duelDao) {
         this.userDao = userDao;
+        this.duelDao = duelDao;
         this.consoleView = consoleView;
         this.messagesController = messagesController;
     }
@@ -55,12 +57,18 @@ public class UserController {
         }
     }
 
+    public void betOnDroid(int duelNumber, int participantToBet) {
+        if (duelDao.isExist(duelNumber) && participantToBet == 1) {
+            duelDao.getAllDuels().get(duelNumber).setUserBet(duelDao.getAllDuels().get(duelNumber).getFirstFighter());
+        } else if (duelDao.isExist(duelNumber) && participantToBet == 2) {
+            duelDao.getAllDuels().get(duelNumber).setUserBet(duelDao.getAllDuels().get(duelNumber).getSecondFighter());
+        } else {
+            consoleView.showError(messagesController.getProperty("error.invalid.input"));
+        }
+    }
+
     public void logOut() {
         userDao.saveCurrentUser(new User());
         consoleView.showMessage(messagesController.getProperty("logout.successful.message"));
-    }
-
-    public void betOnDroid(int droidToBet) {
-
     }
 }

@@ -6,10 +6,10 @@ import com.gmail.violentoleg.droid.battles.game.model.droids.JuggernautDroid;
 import com.gmail.violentoleg.droid.battles.game.model.droids.SlayerDroid;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
-import static java.lang.String.format;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.String.format;
 
 public class DuelDao {
 
@@ -32,6 +32,14 @@ public class DuelDao {
         for (Duel duel : allDuels) {
             consoleView.showMessage(format(duel.toString(), duelNumber));
             duelNumber++;
+        }
+    }
+
+    public boolean isExist(int duelNumber) {
+        if (duelNumber < allDuels.size() && duelNumber >= 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 

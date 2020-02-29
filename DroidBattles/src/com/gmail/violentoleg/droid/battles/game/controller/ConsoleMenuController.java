@@ -26,7 +26,7 @@ public class ConsoleMenuController {
     private MessagesController messagesController = new MessagesController(consoleView);
     private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
     private AdminController adminController = new AdminController(consoleView, droidDao, duelDao);
-    private UserController userController = new UserController(messagesController, consoleView, userDao);
+    private UserController userController = new UserController(messagesController, consoleView, userDao, duelDao);
     private DuelController duelController = new DuelController(messagesController, consoleView, duelDao, droidDao);
 
     private enum Command {
@@ -50,7 +50,7 @@ public class ConsoleMenuController {
 
         private UserRole[] restrictions;
 
-        Command(UserRole...restrictions) {
+        Command(UserRole... restrictions) {
             this.restrictions = restrictions;
         }
 
@@ -59,6 +59,7 @@ public class ConsoleMenuController {
         }
 
     }
+
     public void openMainMenu() {
         UserRole userAccess = userController.getCurrentUser().getRole();
         consoleView.showMessage(format(messagesController.getProperty("menu.options.description"), userAccess));
@@ -104,7 +105,7 @@ public class ConsoleMenuController {
                 openChangeCountryLanguageForm();
                 break;
             case F:
-                openDroidFightForm();
+                openDroidDuelForm();
                 break;
             case A:
                 openAllDroidsInfo();
@@ -164,13 +165,14 @@ public class ConsoleMenuController {
     }
 
     private void openLogoutForm() {
-        String userInput = getUserInputWithLabel("logout.confirmation.message");
+        consoleView.showMessage(messagesController.getProperty("logout.confirmation.message"));
+        String userInput = userInputScanner.nextLine();
         if (userInput.startsWith("y")) {
             userController.logOut();
         }
     }
 
-    private void openDroidFightForm() {
+    private void openDroidDuelForm() {
         String userInput = getUserInputWithLabel("duel.number.label");
         consoleView.showMessage(format(messagesController.getProperty("duel.header.message"), duelDao.getAllDuels().get(Integer.parseInt(userInput)).getFirstFighter(), duelDao.getAllDuels().get(Integer.parseInt(userInput)).getSecondFighter()));
 
@@ -203,7 +205,7 @@ public class ConsoleMenuController {
         String userInputParticipantNumber = getUserInputWithLabel("admin.form.participant.label");
         String userInputDuelNumber = getUserInputWithLabel("admin.form.duel.label");
         String userInputDroidNumber = getUserInputWithLabel("admin.form.droid.label");
-        adminController.addDroidToTheDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber) ,Integer.parseInt(userInputDroidNumber));
+        adminController.addDroidToTheDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber), Integer.parseInt(userInputDroidNumber));
     }
 
     private void openRemoveParticipantForm() {
@@ -216,7 +218,7 @@ public class ConsoleMenuController {
         String userInputParticipantNumber = getUserInputWithLabel("admin.form.participant.label");
         String userInputDuelNumber = getUserInputWithLabel("admin.form.duel.label");
         String userInputDroidNumber = getUserInputWithLabel("admin.form.droid.label");
-        adminController.replaceParticipantOfTheDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber) ,Integer.parseInt(userInputDroidNumber));
+        adminController.replaceParticipantOfTheDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber), Integer.parseInt(userInputDroidNumber));
     }
 
     private void openAddDuelForm() {
@@ -231,7 +233,9 @@ public class ConsoleMenuController {
     }
 
     private void openUserBetForm() {
-
+        String participantNumber = getUserInputWithLabel("duel.number.label");
+        String duelNumber = getUserInputWithLabel("user.bet.form.participant.label");
+        userController.betOnDroid(Integer.parseInt(duelNumber), Integer.parseInt(participantNumber));
     }
 
     private String getUserInputWithLabel(String key) {

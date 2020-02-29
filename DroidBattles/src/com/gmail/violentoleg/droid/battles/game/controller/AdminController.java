@@ -19,11 +19,11 @@ public class AdminController {
 
     public void addDroidToTheDuel(int fighter, int duel, int droid) {
         if (fighter == 1 || fighter == 2) {
-            if (fighter == 1 && duelDao.getAllDuels().get(duel).getFirstFighter() == null) {
+            if (duelDao.isExist(duel) && fighter == 1 && duelDao.getAllDuels().get(duel).getFirstFighter() == null) {
                 duelDao.getAllDuels().get(duel).setFirstFighter(droidDao.getAllDroids().get(droid));
-            } else if (fighter == 2 && duelDao.getAllDuels().get(duel).getSecondFighter() == null) {
+            } else if (duelDao.isExist(duel) && fighter == 2 && duelDao.getAllDuels().get(duel).getSecondFighter() == null) {
                 duelDao.getAllDuels().get(duel).setSecondFighter(droidDao.getAllDroids().get(droid));
-            } else if (fighter == 1 && duelDao.getAllDuels().get(duel).getFirstFighter() != null || fighter == 2 && duelDao.getAllDuels().get(duel).getSecondFighter() != null){
+            } else if (duelDao.isExist(duel) && fighter == 1 && duelDao.getAllDuels().get(duel).getFirstFighter() != null || fighter == 2 && duelDao.getAllDuels().get(duel).getSecondFighter() != null){
                 consoleView.showMessage("The fighter’s place is already taken");
             }
         } else {
@@ -33,9 +33,9 @@ public class AdminController {
 
     public void removeParticipantFromDuel(int droidToRemove, int duel) {
         if (droidToRemove == 1 || droidToRemove == 2) {
-            if (droidToRemove == 1 && duelDao.getAllDuels().get(duel).getFirstFighter() != null) {
+            if (duelDao.isExist(duel) && droidToRemove == 1 && duelDao.getAllDuels().get(duel).getFirstFighter() != null) {
                 duelDao.getAllDuels().get(duel).setFirstFighter(null);
-            } else if(droidToRemove == 2 && duelDao.getAllDuels().get(duel).getSecondFighter() != null) {
+            } else if(duelDao.isExist(duel) && droidToRemove == 2 && duelDao.getAllDuels().get(duel).getSecondFighter() != null) {
                 duelDao.getAllDuels().get(duel).setSecondFighter(null);
             } else {
                 consoleView.showMessage("Fighter place is already empty!");
@@ -47,9 +47,9 @@ public class AdminController {
 
     public void replaceParticipantOfTheDuel(int droidToReplace, int duel, int droid) {
         if (droidToReplace == 1 || droidToReplace == 2) {
-            if (droidToReplace == 1) {
+            if (duelDao.isExist(duel) && droidToReplace == 1) {
                 duelDao.getAllDuels().get(duel).setFirstFighter(droidDao.getAllDroids().get(droid));
-            } else if(droidToReplace == 2) {
+            } else if(duelDao.isExist(duel) && droidToReplace == 2) {
                 duelDao.getAllDuels().get(duel).setSecondFighter(droidDao.getAllDroids().get(droid));
             }
         } else {

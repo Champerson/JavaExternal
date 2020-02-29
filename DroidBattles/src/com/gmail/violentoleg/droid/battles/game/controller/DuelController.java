@@ -3,6 +3,7 @@ package com.gmail.violentoleg.droid.battles.game.controller;
 import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
 import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
 import com.gmail.violentoleg.droid.battles.game.model.Duel;
+import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import static java.lang.String.format;
@@ -33,7 +34,7 @@ public class DuelController {
         if (duelDao.getAllDuels().contains(duel)) {
             duelDao.getAllDuels().remove(duelDao.getAllDuels().indexOf(duel));
         } else {
-            consoleView.showError(messagesController.getProperty("error.invalid.data"));
+            consoleView.showError(messagesController.getProperty("error.invalid.input"));
         }
     }
 
@@ -47,6 +48,24 @@ public class DuelController {
                 duel.getSecondFighter().giveDamage(duel.getFirstFighter());
             }
             consoleView.showMessage(format(messagesController.getProperty("duel.round.result.message"), duel.getFirstFighter().getHealth(), duel.getSecondFighter().getHealth()));
+        }
+        setWinnerOfTheDuel(duel);
+    }
+
+    private void setWinnerOfTheDuel(Duel duel) {
+        if (!duel.getFirstFighter().isAlive()) {
+            duel.setWinner(duel.getSecondFighter());
+        } else {
+            duel.setWinner(duel.getFirstFighter());
+        }
+        System.out.println(duel.getWinner());
+    }
+
+    private void checkUserBet(Duel duel) {
+        if (duel.getUserBet() == duel.getWinner() && duel.getUserBet() != null && duel.getWinner() != null) {
+            consoleView.showMessage("Congratulations %s your droid won" + duel.getUserBet());
+        } else {
+            consoleView.showMessage("sry, %s your droid've lost");
         }
     }
 }
