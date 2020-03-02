@@ -10,50 +10,50 @@ public class AdminController {
     private DuelDao duelDao;
     private DroidDao droidDao;
     private ConsoleView consoleView;
+    private MessagesController messagesController;
 
-    public AdminController(ConsoleView consoleView, DroidDao droidDao, DuelDao duelDao) {
+    public AdminController(MessagesController messagesController, ConsoleView consoleView, DroidDao droidDao, DuelDao duelDao) {
+        this.messagesController = messagesController;
         this.consoleView = consoleView;
         this.droidDao = droidDao;
         this.duelDao = duelDao;
     }
 
-    public void addDroidToTheDuel(int fighter, int duel, int droid) {
-        if (fighter == 1 || fighter == 2) {
-            if (duelDao.isExist(duel) && fighter == 1 && duelDao.getAllDuels().get(duel).getFirstFighter() == null) {
-                duelDao.getAllDuels().get(duel).setFirstFighter(droidDao.getAllDroids().get(droid));
-            } else if (duelDao.isExist(duel) && fighter == 2 && duelDao.getAllDuels().get(duel).getSecondFighter() == null) {
-                duelDao.getAllDuels().get(duel).setSecondFighter(droidDao.getAllDroids().get(droid));
-            } else if (duelDao.isExist(duel) && fighter == 1 && duelDao.getAllDuels().get(duel).getFirstFighter() != null || fighter == 2 && duelDao.getAllDuels().get(duel).getSecondFighter() != null){
-                consoleView.showMessage("The fighter’s place is already taken");
+    public void addDroidToTheDuel(int fighterNumber, int duelNumber, int droidNumber) {
+        if (fighterNumber == 1 || fighterNumber == 2) {
+            if (duelDao.isExist(duelNumber) && fighterNumber == 1 && duelDao.getAllDuels().get(duelNumber).getFirstFighter() == null) {
+                duelDao.getDuel(duelNumber).setFirstFighter(droidDao.getDroid(droidNumber));
+            } else if (duelDao.isExist(duelNumber) && fighterNumber == 2 && duelDao.getAllDuels().get(duelNumber).getSecondFighter() == null) {
+                duelDao.getAllDuels().get(duelNumber).setSecondFighter(droidDao.getDroid(droidNumber));
+            } else if (duelDao.isExist(duelNumber) && fighterNumber == 1 && duelDao.getAllDuels().get(duelNumber).getFirstFighter() != null || fighterNumber == 2 && duelDao.getAllDuels().get(duelNumber).getSecondFighter() != null) {
+                consoleView.showError(messagesController.getProperty("error.participant.place.taken"));
             }
         } else {
-            consoleView.showError("Unsupported exception in addDroidToTheBattle method");
+            consoleView.showError(messagesController.getProperty("error.invalid.input"));
         }
     }
 
-    public void removeParticipantFromDuel(int droidToRemove, int duel) {
-        if (droidToRemove == 1 || droidToRemove == 2) {
-            if (duelDao.isExist(duel) && droidToRemove == 1 && duelDao.getAllDuels().get(duel).getFirstFighter() != null) {
-                duelDao.getAllDuels().get(duel).setFirstFighter(null);
-            } else if(duelDao.isExist(duel) && droidToRemove == 2 && duelDao.getAllDuels().get(duel).getSecondFighter() != null) {
-                duelDao.getAllDuels().get(duel).setSecondFighter(null);
+    public void removeParticipantFromDuel(int participantToRemove, int duelNumber) {
+        if (participantToRemove == 1 || participantToRemove == 2) {
+            if (duelDao.isExist(duelNumber) && participantToRemove == 1 && duelDao.getAllDuels().get(duelNumber).getFirstFighter() != null) {
+                duelDao.getDuel(duelNumber).setFirstFighter(null);
+            } else if (duelDao.isExist(duelNumber) && participantToRemove == 2 && duelDao.getAllDuels().get(duelNumber).getSecondFighter() != null) {
+                duelDao.getAllDuels().get(duelNumber).setSecondFighter(null);
             } else {
-                consoleView.showMessage("Fighter place is already empty!");
+                consoleView.showError(messagesController.getProperty("error.empty.participant.place"));
             }
         } else {
-            consoleView.showError("Unsupported exception in deleteDroidFromBattle");
+            consoleView.showError(messagesController.getProperty("error.invalid.input"));
         }
     }
 
     public void replaceParticipantOfTheDuel(int droidToReplace, int duel, int droid) {
-        if (droidToReplace == 1 || droidToReplace == 2) {
-            if (duelDao.isExist(duel) && droidToReplace == 1) {
-                duelDao.getAllDuels().get(duel).setFirstFighter(droidDao.getAllDroids().get(droid));
-            } else if(duelDao.isExist(duel) && droidToReplace == 2) {
-                duelDao.getAllDuels().get(duel).setSecondFighter(droidDao.getAllDroids().get(droid));
-            }
+        if (duelDao.isExist(duel) && droidToReplace == 1) {
+            duelDao.getAllDuels().get(duel).setFirstFighter(droidDao.getDroid(droid));
+        } else if (duelDao.isExist(duel) && droidToReplace == 2) {
+            duelDao.getAllDuels().get(duel).setSecondFighter(droidDao.getDroid(droid));
         } else {
-            consoleView.showError("Unsupported exception in replaceDroidInBattle");
+            consoleView.showError(messagesController.getProperty("error.invalid.input"));
         }
     }
 }

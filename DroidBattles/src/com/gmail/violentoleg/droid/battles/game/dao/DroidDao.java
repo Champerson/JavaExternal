@@ -29,6 +29,14 @@ public class DroidDao {
         return allDroids;
     }
 
+    public Droid getDroid(int droidNumber) {
+        if (allDroids.size() <= droidNumber || droidNumber < 0) {
+            return null;
+        } else {
+            return allDroids.get(droidNumber);
+        }
+    }
+
     public void showAllDroids() {
         int droidNumber = 0;
 

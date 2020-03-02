@@ -46,4 +46,12 @@ public class DuelDao {
     public List<Duel> getAllDuels() {
         return allDuels;
     }
+
+    public Duel getDuel(int duelNumber) {
+        if (isExist(duelNumber)) {
+            return getAllDuels().get(duelNumber);
+        } else {
+            return null;
+        }
+    }
 }

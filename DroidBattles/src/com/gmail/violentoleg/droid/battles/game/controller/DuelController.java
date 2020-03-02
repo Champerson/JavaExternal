@@ -3,7 +3,6 @@ package com.gmail.violentoleg.droid.battles.game.controller;
 import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
 import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
 import com.gmail.violentoleg.droid.battles.game.model.Duel;
-import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import static java.lang.String.format;
@@ -49,23 +48,25 @@ public class DuelController {
             }
             consoleView.showMessage(format(messagesController.getProperty("duel.round.result.message"), duel.getFirstFighter().getHealth(), duel.getSecondFighter().getHealth()));
         }
-        setWinnerOfTheDuel(duel);
+        determineTheWinnerOfTheDuel(duel);
+        showUserBetResult(duel);
     }
 
-    private void setWinnerOfTheDuel(Duel duel) {
+    private void determineTheWinnerOfTheDuel(Duel duel) {
         if (!duel.getFirstFighter().isAlive()) {
             duel.setWinner(duel.getSecondFighter());
         } else {
             duel.setWinner(duel.getFirstFighter());
         }
-        System.out.println(duel.getWinner());
     }
 
-    private void checkUserBet(Duel duel) {
-        if (duel.getUserBet() == duel.getWinner() && duel.getUserBet() != null && duel.getWinner() != null) {
-            consoleView.showMessage("Congratulations %s your droid won" + duel.getUserBet());
+    private void showUserBetResult(Duel duel) {
+        if (duel.getUserBet() != null && duel.getWinner() != null && duel.getUserBet() == duel.getWinner()) {
+            consoleView.showMessage(format(messagesController.getProperty("duel.user.bet.won.message"), duel.getUserBet().getClass().getSimpleName()));
+        } else if (duel.getUserBet() == null) {
+            consoleView.showMessage(format(messagesController.getProperty("duel.winner.message"), duel.getWinner().getClass().getSimpleName()));
         } else {
-            consoleView.showMessage("sry, %s your droid've lost");
+            consoleView.showMessage(format(messagesController.getProperty("duel.user.bet.lost"), duel.getUserBet().getClass().getSimpleName()));
         }
     }
 }
