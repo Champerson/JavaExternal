@@ -3,11 +3,12 @@ package com.gmail.violentoleg.droid.battles.game.controller;
 
 import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
 import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
-import com.gmail.violentoleg.droid.battles.game.model.user.User;
+import com.gmail.violentoleg.droid.battles.game.model.Duel;
+import com.gmail.violentoleg.droid.battles.game.model.User;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import static com.gmail.violentoleg.droid.battles.game.controller.validator.Validator.validateCredentials;
-import static com.gmail.violentoleg.droid.battles.game.model.user.UserRole.USER;
+import static com.gmail.violentoleg.droid.battles.game.model.UserRole.USER;
 import static java.lang.String.format;
 
 public class UserController {
@@ -57,18 +58,24 @@ public class UserController {
         }
     }
 
-    public void betOnDroid(int duelNumber, int participantToBet) {
-        if (duelDao.isExist(duelNumber) && participantToBet == 1) {
-            duelDao.getAllDuels().get(duelNumber).setUserBet(duelDao.getAllDuels().get(duelNumber).getFirstFighter());
-        } else if (duelDao.isExist(duelNumber) && participantToBet == 2) {
-            duelDao.getAllDuels().get(duelNumber).setUserBet(duelDao.getAllDuels().get(duelNumber).getSecondFighter());
-        } else {
-            consoleView.showError(messagesController.getProperty("error.invalid.input"));
-        }
-    }
-
     public void logOut() {
         userDao.saveCurrentUser(new User());
         consoleView.showMessage(messagesController.getProperty("logout.successful.message"));
+    }
+
+    public void betOnDroid(int duelNumber, int participantToBet) {
+        Duel duel = duelDao.getAllDuels().get(duelNumber);
+
+        if (duelDao.isExist(duelNumber)) {
+            if ( participantToBet == 1) {
+                duel.setUserBet(duelDao.getAllDuels().get(duelNumber).getFirstFighter());
+            } else if (participantToBet == 2) {
+                duel.setUserBet(duelDao.getAllDuels().get(duelNumber).getSecondFighter());
+            } else {
+                consoleView.showError(messagesController.getProperty("error.invalid.input"));
+            }
+        } else {
+            consoleView.showError(messagesController.getProperty("error.invalid.input"));
+        }
     }
 }

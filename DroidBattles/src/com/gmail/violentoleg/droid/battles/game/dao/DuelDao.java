@@ -26,21 +26,8 @@ public class DuelDao {
         allDuels.add(new Duel(firstParticipant, secondParticipant));
     }
 
-    public void showAllDuels() {
-        int duelNumber = 0;
-
-        for (Duel duel : allDuels) {
-            consoleView.showMessage(format(duel.toString(), duelNumber));
-            duelNumber++;
-        }
-    }
-
     public boolean isExist(int duelNumber) {
-        if (duelNumber < allDuels.size() && duelNumber >= 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return duelNumber < allDuels.size() && duelNumber >= 0;
     }
 
     public List<Duel> getAllDuels() {
@@ -48,10 +35,6 @@ public class DuelDao {
     }
 
     public Duel getDuel(int duelNumber) {
-        if (isExist(duelNumber)) {
-            return getAllDuels().get(duelNumber);
-        } else {
-            return null;
-        }
+        return isExist(duelNumber) ? getAllDuels().get(duelNumber) : null;
     }
 }

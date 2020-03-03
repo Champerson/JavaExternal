@@ -1,7 +1,7 @@
-package com.gmail.violentoleg.droid.battles.game.model.user;
+package com.gmail.violentoleg.droid.battles.game.model;
 
 
-import static com.gmail.violentoleg.droid.battles.game.model.user.UserRole.GUEST;
+import static com.gmail.violentoleg.droid.battles.game.model.UserRole.GUEST;
 
 public class User {
 

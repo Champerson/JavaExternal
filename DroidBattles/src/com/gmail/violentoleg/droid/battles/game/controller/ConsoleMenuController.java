@@ -4,7 +4,7 @@ package com.gmail.violentoleg.droid.battles.game.controller;
 import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
 import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
 import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
-import com.gmail.violentoleg.droid.battles.game.model.user.UserRole;
+import com.gmail.violentoleg.droid.battles.game.model.UserRole;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import java.util.AbstractMap;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import static com.gmail.violentoleg.droid.battles.game.model.user.UserRole.*;
+import static com.gmail.violentoleg.droid.battles.game.model.UserRole.*;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 
@@ -151,11 +151,11 @@ public class ConsoleMenuController {
     }
 
     private void openAllDroidsInfo() {
-        droidDao.showAllDroids();
+        duelController.showAllDroids();
     }
 
     private void openAllDuelsInfo() {
-        duelDao.showAllDuels();
+        duelController.showAllDuels();
     }
 
     private void openChangeCountryLanguageForm() {

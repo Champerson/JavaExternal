@@ -3,7 +3,7 @@ package com.gmail.violentoleg.droid.battles.game.model.droids;
 import static com.gmail.violentoleg.droid.battles.game.model.droids.DroidType.HEALER;
 import static java.lang.Math.random;
 
-public class SelfHealDroid extends Droid{
+public class SelfHealDroid extends Droid {
 
     private static final int HEAL_CHANCE_PERCENTS = 5;
 

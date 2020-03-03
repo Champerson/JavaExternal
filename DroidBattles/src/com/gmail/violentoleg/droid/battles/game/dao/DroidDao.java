@@ -36,13 +36,4 @@ public class DroidDao {
             return allDroids.get(droidNumber);
         }
     }
-
-    public void showAllDroids() {
-        int droidNumber = 0;
-
-        for (Droid droid : allDroids) {
-            System.out.println(droidNumber + " - " + droid.toString());
-            droidNumber++;
-        }
-    }
 }

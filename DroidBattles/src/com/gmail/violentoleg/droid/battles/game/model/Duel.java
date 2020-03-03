@@ -54,6 +54,6 @@ public class Duel {
     public String toString() {
         return "\nDuel %s:" + System.lineSeparator() +
                 "Participants :" + System.lineSeparator() +
-                firstFighter + "\n VS \n"  + secondFighter;
+                firstFighter + "\n VS \n" + secondFighter;
     }
 }
