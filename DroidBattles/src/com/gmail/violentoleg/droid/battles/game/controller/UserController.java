@@ -64,13 +64,12 @@ public class UserController {
     }
 
     public void betOnDroid(int duelNumber, int participantToBet) {
-        Duel duel = duelDao.getAllDuels().get(duelNumber);
-
         if (duelDao.isExist(duelNumber)) {
-            if ( participantToBet == 1) {
-                duel.setUserBet(duelDao.getAllDuels().get(duelNumber).getFirstFighter());
+            Duel duel = duelDao.getAllDuels().get(duelNumber);
+            if (participantToBet == 1) {
+                duel.setUserBet(duel.getFirstFighter());
             } else if (participantToBet == 2) {
-                duel.setUserBet(duelDao.getAllDuels().get(duelNumber).getSecondFighter());
+                duel.setUserBet(duel.getSecondFighter());
             } else {
                 consoleView.showError(messagesController.getProperty("error.invalid.input"));
             }

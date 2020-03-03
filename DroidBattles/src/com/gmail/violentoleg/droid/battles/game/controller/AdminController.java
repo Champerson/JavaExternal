@@ -4,6 +4,7 @@ package com.gmail.violentoleg.droid.battles.game.controller;
 import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
 import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
 import com.gmail.violentoleg.droid.battles.game.model.Duel;
+import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 public class AdminController {
@@ -23,10 +24,11 @@ public class AdminController {
     public void addDroidToTheDuel(int participantNumber, int duelNumber, int droidNumber) {
         if (duelDao.isExist(duelNumber) && participantNumber == 1 || participantNumber == 2) {
             Duel duel = duelDao.getAllDuels().get(duelNumber);
-            if (participantNumber == 1 && duelDao.getAllDuels().get(duelNumber).getFirstFighter() == null) {
-                duel.setFirstFighter(droidDao.getDroid(droidNumber));
-            } else if (participantNumber == 2 && duelDao.getAllDuels().get(duelNumber).getSecondFighter() == null) {
-                duel.setSecondFighter(droidDao.getDroid(droidNumber));
+            Droid droid = droidDao.getDroid(droidNumber);
+            if (participantNumber == 1 && duel.getFirstFighter() == null) {
+                duel.setFirstFighter(droid);
+            } else if (participantNumber == 2 && duel.getSecondFighter() == null) {
+                duel.setSecondFighter(droid);
             } else if (participantNumber == 1 && duel.getFirstFighter() != null || participantNumber == 2 && duel.getSecondFighter() != null) {
                 consoleView.showError(messagesController.getProperty("error.participant.place.taken"));
             }
@@ -50,13 +52,14 @@ public class AdminController {
         }
     }
 
-    public void replaceParticipantOfTheDuel(int participantToReplace, int duelNumber, int droid) {
+    public void replaceParticipantOfTheDuel(int participantToReplace, int duelNumber, int droidNumber) {
         if (duelDao.isExist(duelNumber)) {
+            Droid droid = droidDao.getDroid(droidNumber);
             Duel duel = duelDao.getAllDuels().get(duelNumber);
             if (participantToReplace == 1) {
-                duel.setFirstFighter(droidDao.getDroid(droid));
+                duel.setFirstFighter(droid);
             } else if (participantToReplace == 2) {
-                duel.setSecondFighter(droidDao.getDroid(droid));
+                duel.setSecondFighter(droid);
             } else {
                 consoleView.showError(messagesController.getProperty("error.invalid.input"));
             }

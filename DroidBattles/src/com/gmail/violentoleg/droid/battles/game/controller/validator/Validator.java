@@ -8,13 +8,12 @@ public class Validator {
 
     private static Matcher loginMatcher;
     private static Matcher passwordMatcher;
-    private static Pattern loginRegex = Pattern.compile("^[a-zA-Z][a-zA-Z0-9-_\\.]{2,20}$");
-    private static Pattern passwordRegex = Pattern.compile("^[a-zA-Z][a-zA-Z0-9-_\\.]{2,20}$");
+    private static Pattern credentialsRegex = Pattern.compile("^[a-zA-Z][a-zA-Z0-9-_\\.]{2,20}$");
 
     public static boolean validateCredentials(String login, String password) {
         if (login != null && !login.isEmpty() && password != null && !password.isEmpty()) {
-            loginMatcher = loginRegex.matcher(login);
-            passwordMatcher = passwordRegex.matcher(password);
+            loginMatcher = credentialsRegex.matcher(login);
+            passwordMatcher = credentialsRegex.matcher(password);
             return loginMatcher.matches() && passwordMatcher.matches();
         } else {
             return false;
