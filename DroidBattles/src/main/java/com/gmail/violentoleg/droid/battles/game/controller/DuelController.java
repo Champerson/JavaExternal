@@ -6,6 +6,8 @@ import com.gmail.violentoleg.droid.battles.game.model.Duel;
 import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
+import java.util.List;
+
 import static java.lang.String.format;
 
 public class DuelController {
@@ -41,10 +43,10 @@ public class DuelController {
     public void startDuel(Duel duel) {
         int round = 1;
 
-        while (duel.getFirstFighter().isAlive() && duel.getSecondFighter().isAlive()) {
+        while (duel.getFirstFighter().getEngine().isAlive() && duel.getSecondFighter().getEngine().isAlive()) {
             consoleView.showMessage(format(messagesController.getProperty("duel.round.title"), round++));
             duel.getFirstFighter().giveDamage(duel.getSecondFighter());
-            if (duel.getSecondFighter().isAlive()) {
+            if (duel.getSecondFighter().getEngine().isAlive()) {
                 duel.getSecondFighter().giveDamage(duel.getFirstFighter());
             }
             consoleView.showMessage(format(messagesController.getProperty("duel.round.result.message"), duel.getFirstFighter().getHealth(), duel.getSecondFighter().getHealth()));
@@ -54,7 +56,7 @@ public class DuelController {
     }
 
     private void determineTheWinnerOfTheDuel(Duel duel) {
-        if (!duel.getFirstFighter().isAlive()) {
+        if (!duel.getFirstFighter().getEngine().isAlive()) {
             duel.setWinner(duel.getSecondFighter());
         } else {
             duel.setWinner(duel.getFirstFighter());

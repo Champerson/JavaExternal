@@ -23,6 +23,7 @@ public class ConsoleMenuController {
     private ConsoleView consoleView = new ConsoleView();
     private DuelDao duelDao = new DuelDao();
     private Scanner userInputScanner = new Scanner(System.in);
+    private DroidController droidController = new DroidController(droidDao);
     private MessagesController messagesController = new MessagesController(consoleView);
     private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
     private UserController userController = new UserController(messagesController, consoleView, userDao, duelDao);
@@ -46,7 +47,10 @@ public class ConsoleMenuController {
         V(USER, GUEST),
         F(ADMIN, GUEST),
         G(USER, GUEST),
-        U(ADMIN, GUEST);
+        U(ADMIN, GUEST),
+        B(GUEST, USER),
+        J(GUEST),
+        K(GUEST);
 
         private UserRole[] restrictions;
 
@@ -142,6 +146,15 @@ public class ConsoleMenuController {
                 break;
             case S:
                 openUserBetForm();
+                break;
+            case B:
+                openSortAllDroidsForm();
+                break;
+            case J:
+                openMaxDamageDroidForm();
+                break;
+            case K:
+                openMaxHealthDroidForm();
                 break;
         }
     }
@@ -240,6 +253,19 @@ public class ConsoleMenuController {
         String duelNumber = getUserInputWithLabel("duel.number.label");
         String participantNumber = getUserInputWithLabel("user.bet.form.participant.label");
         userController.betOnDroid(parseUserInput(duelNumber), parseUserInput(participantNumber));
+    }
+
+    private void openMaxHealthDroidForm() {
+        consoleView.showMessage(droidController.findDroidWithByHealth().toString());
+    }
+
+    private void openMaxDamageDroidForm() {
+        consoleView.showMessage(droidController.findDroidByMaxDamage().toString());
+    }
+
+    private void openSortAllDroidsForm() {
+        droidController.sortAllDroidsByHealth();
+        droidController.showAllSortedDroids();
     }
 
     private String getUserInputWithLabel(String key) {

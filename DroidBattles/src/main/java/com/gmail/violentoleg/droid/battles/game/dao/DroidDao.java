@@ -10,6 +10,7 @@ import java.util.List;
 public class DroidDao {
 
     Factory droidFactory = new Factory();
+
     private List<Droid> allDroids = new ArrayList<Droid>() {{
         add(droidFactory.droidFactory(0));
         add(droidFactory.droidFactory(1));

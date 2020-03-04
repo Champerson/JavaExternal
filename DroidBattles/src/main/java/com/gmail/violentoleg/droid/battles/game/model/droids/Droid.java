@@ -8,16 +8,24 @@ public abstract class Droid {
 
     private int health;
     private int damage;
+    private Engine engine;
     private DamageCalculationStrategy damageCalculationStrategy;
 
     public Droid(int health, int damage, DamageCalculationStrategy damageCalculationStrategy) {
         this.health = health;
         this.damage = damage;
+        this.engine = new Engine();
         this.damageCalculationStrategy = damageCalculationStrategy;
     }
 
-    private class Engine {
+    public class Engine {
+        public boolean isAlive() {
+            return getHealth() > 0;
+        }
+    }
 
+    public Engine getEngine() {
+        return engine;
     }
 
     public int getHealth() {
@@ -34,10 +42,6 @@ public abstract class Droid {
 
     public void takeDamage(int damage) {
         this.health = max(0, this.health - damageCalculationStrategy.reduceIncomingDamage(damage));
-    }
-
-    public boolean isAlive() {
-        return this.health > 0;
     }
 
     @Override
