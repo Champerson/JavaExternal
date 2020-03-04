@@ -6,12 +6,10 @@ public abstract class Droid {
 
     private int health;
     private int damage;
-    private DroidType type;
 
-    public Droid(int health, int damage, DroidType type) {
+    public Droid(int health, int damage) {
         this.health = health;
         this.damage = damage;
-        this.type = type;
     }
 
     public int getHealth() {
@@ -20,10 +18,6 @@ public abstract class Droid {
 
     public int getDamage() {
         return damage;
-    }
-
-    public DroidType getType() {
-        return type;
     }
 
     public void giveDamage(Droid droidRecipient) {
@@ -44,7 +38,7 @@ public abstract class Droid {
 
     @Override
     public String toString() {
-        return " Droid: " + getClass().getSimpleName() + " [" + type + "]" +
+        return " Droid: " + getClass().getSimpleName() +
                 "\n health: " + health +
                 "\n damage: " + damage;
     }

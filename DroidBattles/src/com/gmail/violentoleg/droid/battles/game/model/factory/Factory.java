@@ -5,21 +5,22 @@ import com.gmail.violentoleg.droid.battles.game.model.droids.*;
 
 public class Factory {
 
-    public Droid droidFactory(DroidType type) {
-        switch (type) {
-            case TANK:
-                return new JuggernautDroid(500, 35);
-            case STANDARD:
-                return new SimpleDroid(450, 50);
-            case HEALER:
-                return new SelfHealDroid(350, 40);
-            case ASSASSIN:
-                return new DodgerDroid(350, 40);
-            case DAMAGE_DIALER:
-                return new SlayerDroid(300, 60);
-            default:
-                throw new IllegalArgumentException("Wrong droid type: " + type);
+    public Droid droidFactory(int droidNumber) {
+        Droid droid = new SlayerDroid(400, 30);
+
+        switch (droidNumber) {
+            case 0:
+                droid = new SimpleDroid(700, 40);
+            case 1:
+                droid = new JuggernautDroid(500, 30);
+            case 2:
+                droid = new SelfHealDroid(600, 40);
+            case 3:
+                droid = new SlayerDroid(300, 50);
+            case 4:
+                droid = new DodgerDroid(400, 40);
         }
+        return droid;
     }
 
     public Duel duelFactory() {

@@ -13,14 +13,9 @@ import static java.lang.String.format;
 
 public class DuelDao {
 
-    private ConsoleView consoleView;
     private List<Duel> allDuels = new ArrayList<>() {{
         add(new Duel(new JuggernautDroid(430, 40), new SlayerDroid(350, 60)));
     }};
-
-    public DuelDao(ConsoleView consoleView) {
-        this.consoleView = consoleView;
-    }
 
     public void createNewDuel(Droid firstParticipant, Droid secondParticipant) {
         allDuels.add(new Duel(firstParticipant, secondParticipant));

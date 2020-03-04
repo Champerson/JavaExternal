@@ -21,7 +21,7 @@ public class ConsoleMenuController {
     private UserDao userDao = new UserDao();
     private DroidDao droidDao = new DroidDao();
     private ConsoleView consoleView = new ConsoleView();
-    private DuelDao duelDao = new DuelDao(consoleView);
+    private DuelDao duelDao = new DuelDao();
     private Scanner userInputScanner = new Scanner(System.in);
     private MessagesController messagesController = new MessagesController(consoleView);
     private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
@@ -174,9 +174,9 @@ public class ConsoleMenuController {
 
     private void openDroidDuelForm() {
         String userInput = getUserInputWithLabel("duel.number.label");
-        consoleView.showMessage(format(messagesController.getProperty("duel.header.message"), duelDao.getDuel(Integer.parseInt(userInput)).getFirstFighter(), duelDao.getDuel(Integer.parseInt(userInput)).getSecondFighter()));
+        consoleView.showMessage(format(messagesController.getProperty("duel.header.message"), duelDao.getDuel(parseUserInput(userInput)).getFirstFighter(), duelDao.getDuel(parseUserInput(userInput)).getSecondFighter()));
 
-        duelController.startDuel(duelDao.getAllDuels().get(Integer.parseInt(userInput)));
+        duelController.startDuel(duelDao.getAllDuels().get(parseUserInput(userInput)));
     }
 
     private void openRegistrationForm() {
@@ -205,37 +205,41 @@ public class ConsoleMenuController {
         String userInputParticipantNumber = getUserInputWithLabel("admin.form.participant.label");
         String userInputDuelNumber = getUserInputWithLabel("admin.form.duel.label");
         String userInputDroidNumber = getUserInputWithLabel("admin.form.droid.label");
-        adminController.addDroidToTheDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber), Integer.parseInt(userInputDroidNumber));
+        adminController.addDroidToTheDuel(parseUserInput(userInputParticipantNumber), parseUserInput(userInputDuelNumber), parseUserInput(userInputDroidNumber));
     }
 
     private void openRemoveParticipantForm() {
         String userInputParticipantNumber = getUserInputWithLabel("admin.form.participant.label");
         String userInputDuelNumber = getUserInputWithLabel("admin.form.duel.label");
-        adminController.removeParticipantFromDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber));
+        adminController.removeParticipantFromDuel(parseUserInput(userInputParticipantNumber), parseUserInput(userInputDuelNumber));
     }
 
     private void openReplaceParticipantForm() {
         String userInputParticipantNumber = getUserInputWithLabel("admin.form.participant.label");
         String userInputDuelNumber = getUserInputWithLabel("admin.form.duel.label");
         String userInputDroidNumber = getUserInputWithLabel("admin.form.droid.label");
-        adminController.replaceParticipantOfTheDuel(Integer.parseInt(userInputParticipantNumber), Integer.parseInt(userInputDuelNumber), Integer.parseInt(userInputDroidNumber));
+        adminController.replaceParticipantOfTheDuel(parseUserInput(userInputParticipantNumber), parseUserInput(userInputDuelNumber), parseUserInput(userInputDroidNumber));
     }
 
     private void openAddDuelForm() {
         String userInputFirstDroidNumber = getUserInputWithLabel("admin.form.droid.label");
         String userInputSecondDroidNumber = getUserInputWithLabel("admin.form.droid.label");
-        duelController.registerDuel(Integer.parseInt(userInputFirstDroidNumber), Integer.parseInt(userInputSecondDroidNumber));
+        duelController.registerDuel(parseUserInput(userInputFirstDroidNumber), parseUserInput(userInputSecondDroidNumber));
+    }
+
+    private int parseUserInput(String userInput) {
+        return Integer.parseInt(userInput);
     }
 
     private void openRemoveDuelForm() {
         String userInputDuelNumber = getUserInputWithLabel("duel.number.label");
-        duelController.removeDuel(duelDao.getDuel(Integer.parseInt(userInputDuelNumber)));
+        duelController.removeDuel(duelDao.getDuel(parseUserInput(userInputDuelNumber)));
     }
 
     private void openUserBetForm() {
         String duelNumber = getUserInputWithLabel("duel.number.label");
         String participantNumber = getUserInputWithLabel("user.bet.form.participant.label");
-        userController.betOnDroid(Integer.parseInt(duelNumber), Integer.parseInt(participantNumber));
+        userController.betOnDroid(parseUserInput(duelNumber), parseUserInput(participantNumber));
     }
 
     private String getUserInputWithLabel(String key) {

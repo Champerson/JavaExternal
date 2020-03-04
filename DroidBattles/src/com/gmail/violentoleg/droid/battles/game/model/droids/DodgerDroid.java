@@ -1,6 +1,5 @@
 package com.gmail.violentoleg.droid.battles.game.model.droids;
 
-import static com.gmail.violentoleg.droid.battles.game.model.droids.DroidType.ASSASSIN;
 import static java.lang.Math.random;
 
 public class DodgerDroid extends Droid {
@@ -8,7 +7,7 @@ public class DodgerDroid extends Droid {
     private static final int DODGE_CHANCE_PERCENTS = 20;
 
     public DodgerDroid(int health, int damage) {
-        super(health, damage, ASSASSIN);
+        super(health, damage);
     }
 
     @Override

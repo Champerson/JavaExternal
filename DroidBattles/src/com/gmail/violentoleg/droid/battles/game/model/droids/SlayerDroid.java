@@ -1,6 +1,5 @@
 package com.gmail.violentoleg.droid.battles.game.model.droids;
 
-import static com.gmail.violentoleg.droid.battles.game.model.droids.DroidType.DAMAGE_DIALER;
 import static java.lang.Math.random;
 
 public class SlayerDroid extends Droid {
@@ -9,7 +8,7 @@ public class SlayerDroid extends Droid {
     private static final int CRITICAL_HIT_MULTIPLIER = 2;
 
     public SlayerDroid(int health, int damage) {
-        super(health, damage, DAMAGE_DIALER);
+        super(health, damage);
     }
 
     @Override
