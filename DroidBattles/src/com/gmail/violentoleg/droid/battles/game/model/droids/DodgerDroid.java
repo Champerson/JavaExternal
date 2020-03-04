@@ -1,27 +1,10 @@
 package com.gmail.violentoleg.droid.battles.game.model.droids;
 
-import static java.lang.Math.random;
+import com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DodgerDroidDefenceStrategy;
 
 public class DodgerDroid extends Droid {
 
-    private static final int DODGE_CHANCE_PERCENTS = 20;
-
     public DodgerDroid(int health, int damage) {
-        super(health, damage);
-    }
-
-    @Override
-    protected int calculateDamage() {
-        return this.getDamage();
-    }
-
-    @Override
-    protected int reduceIncomingDamage(int damage) {
-        return isDodgeApply() ? 0 : damage;
-    }
-
-    private boolean isDodgeApply() {
-        int dodgeChance = (int) (random() * (100 / DODGE_CHANCE_PERCENTS));
-        return dodgeChance == 0;
+        super(health, damage, new DodgerDroidDefenceStrategy());
     }
 }

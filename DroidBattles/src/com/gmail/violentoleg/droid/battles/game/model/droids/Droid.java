@@ -1,15 +1,23 @@
 package com.gmail.violentoleg.droid.battles.game.model.droids;
 
+import com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DamageCalculationStrategy;
+
 import static java.lang.Math.max;
 
 public abstract class Droid {
 
     private int health;
     private int damage;
+    private DamageCalculationStrategy damageCalculationStrategy;
 
-    public Droid(int health, int damage) {
+    public Droid(int health, int damage, DamageCalculationStrategy damageCalculationStrategy) {
         this.health = health;
         this.damage = damage;
+        this.damageCalculationStrategy = damageCalculationStrategy;
+    }
+
+    private class Engine {
+
     }
 
     public int getHealth() {
@@ -21,20 +29,16 @@ public abstract class Droid {
     }
 
     public void giveDamage(Droid droidRecipient) {
-        droidRecipient.takeDamage(calculateDamage());
+        droidRecipient.takeDamage(damageCalculationStrategy.calculateDamage(this.getDamage()));
     }
 
     public void takeDamage(int damage) {
-        this.health = max(0, this.health - reduceIncomingDamage(damage));
+        this.health = max(0, this.health - damageCalculationStrategy.reduceIncomingDamage(damage));
     }
 
     public boolean isAlive() {
         return this.health > 0;
     }
-
-    protected abstract int calculateDamage();
-
-    protected abstract int reduceIncomingDamage(int damage);
 
     @Override
     public String toString() {
