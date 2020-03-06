@@ -1,12 +1,10 @@
-package com.gmail.violentoleg.droid.battles.game.controller;
+package main.java.com.gmail.violentoleg.droid.battles.game.controller;
 
-import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
-import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
-import com.gmail.violentoleg.droid.battles.game.model.Duel;
-import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
-import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
-import java.util.List;
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.Duel;
+import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import static java.lang.String.format;
 
@@ -34,7 +32,7 @@ public class DuelController {
 
     public void removeDuel(Duel duel) {
         if (duelDao.getAllDuels().contains(duel)) {
-            duelDao.getAllDuels().remove(duelDao.getAllDuels().indexOf(duel));
+            duelDao.getAllDuels().remove(duel);
         } else {
             consoleView.showError(messagesController.getProperty("error.invalid.input"));
         }
@@ -79,15 +77,6 @@ public class DuelController {
         for (Duel duel : duelDao.getAllDuels()) {
             consoleView.showMessage(format(duel.toString(), duelNumber));
             duelNumber++;
-        }
-    }
-
-    public void showAllDroids() {
-        int droidNumber = 0;
-
-        for (Droid droid : droidDao.getAllDroids()) {
-            System.out.println(droidNumber + " - " + droid.toString());
-            droidNumber++;
         }
     }
 }

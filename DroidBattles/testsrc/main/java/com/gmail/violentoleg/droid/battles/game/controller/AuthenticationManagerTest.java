@@ -1,18 +1,14 @@
-package com.gmail.violentoleg.droid.battles.game.controller;
+package main.java.com.gmail.violentoleg.droid.battles.game.controller;
 
-import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
-import com.gmail.violentoleg.droid.battles.game.model.User;
-import com.gmail.violentoleg.droid.battles.game.model.UserRole;
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.UserDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.UserRole;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gmail.violentoleg.droid.battles.game.model.UserRole.ADMIN;
-import static org.junit.Assert.*;
+import static main.java.com.gmail.violentoleg.droid.battles.game.model.UserRole.ADMIN;
 
 public class AuthenticationManagerTest {
 

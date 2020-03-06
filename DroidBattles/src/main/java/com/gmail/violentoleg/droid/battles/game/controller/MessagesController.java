@@ -1,7 +1,7 @@
-package com.gmail.violentoleg.droid.battles.game.controller;
+package main.java.com.gmail.violentoleg.droid.battles.game.controller;
 
 
-import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;

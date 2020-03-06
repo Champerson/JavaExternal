@@ -1,12 +1,12 @@
-package com.gmail.violentoleg.droid.battles.game.dao;
+package main.java.com.gmail.violentoleg.droid.battles.game.dao;
 
 
-import com.gmail.violentoleg.droid.battles.game.model.User;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.gmail.violentoleg.droid.battles.game.model.UserRole.ADMIN;
+import static main.java.com.gmail.violentoleg.droid.battles.game.model.UserRole.ADMIN;
 
 public class UserDao {
 

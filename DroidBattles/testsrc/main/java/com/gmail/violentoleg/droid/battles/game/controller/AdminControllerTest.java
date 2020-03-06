@@ -1,16 +1,12 @@
-package com.gmail.violentoleg.droid.battles.game.controller;
+package main.java.com.gmail.violentoleg.droid.battles.game.controller;
 
-import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
-import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
-import com.gmail.violentoleg.droid.battles.game.model.Duel;
-import com.gmail.violentoleg.droid.battles.game.model.droids.*;
-import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.Duel;
+import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class AdminControllerTest {
     private static DuelDao duelDao = new DuelDao();

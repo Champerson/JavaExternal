@@ -1,6 +1,7 @@
-package com.gmail.violentoleg.droid.battles.game.model;
+package main.java.com.gmail.violentoleg.droid.battles.game.model;
 
-import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
+
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
 
 public class Duel {
 

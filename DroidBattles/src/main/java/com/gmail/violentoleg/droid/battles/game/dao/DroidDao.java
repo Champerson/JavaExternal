@@ -1,7 +1,9 @@
-package com.gmail.violentoleg.droid.battles.game.dao;
+package main.java.com.gmail.violentoleg.droid.battles.game.dao;
 
-import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
-import com.gmail.violentoleg.droid.battles.game.model.factory.Factory;
+
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.factory.Factory;
+import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,18 +11,33 @@ import java.util.List;
 
 public class DroidDao {
 
-    Factory droidFactory = new Factory();
+    Factory droidFactory;
+    ConsoleView consoleView;
 
-    private List<Droid> allDroids = new ArrayList<Droid>() {{
-        add(droidFactory.droidFactory(0));
-        add(droidFactory.droidFactory(1));
-        add(droidFactory.droidFactory(2));
-        add(droidFactory.droidFactory(3));
-        add(droidFactory.droidFactory(4));
+    public DroidDao(ConsoleView consoleView) {
+        this.consoleView = consoleView;
+        this.droidFactory = new Factory();
+    }
+
+    private List<Droid> allDroids = new ArrayList<>() {{
+        add(droidFactory.droidFactory("juggernaut"));
+        add(droidFactory.droidFactory("simple"));
+        add(droidFactory.droidFactory("healer"));
+        add(droidFactory.droidFactory("slayer"));
+        add(droidFactory.droidFactory("dodger"));
     }};
 
-    public void createNewDroid(int droidNumber) {
-        allDroids.add(droidFactory.droidFactory(droidNumber));
+    public void createNewDroid(String userInputDroid) {
+        Droid newDroid = droidFactory.droidFactory(userInputDroid);
+        if (newDroid == null) {
+            consoleView.showError("Invalid input!");
+        } else  {
+            allDroids.add(droidFactory.droidFactory(userInputDroid));
+        }
+    }
+
+    public void setAllDroids(List<Droid> allDroids) {
+        this.allDroids = allDroids;
     }
 
     public List<Droid> getAllDroids() {

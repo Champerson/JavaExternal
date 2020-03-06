@@ -1,9 +1,7 @@
-package com.gmail.violentoleg.droid.battles.game.controller.validator;
+package main.java.com.gmail.violentoleg.droid.battles.game.controller.validator;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ValidatorTest {
 

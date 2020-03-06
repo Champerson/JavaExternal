@@ -1,10 +1,10 @@
-package com.gmail.violentoleg.droid.battles.game.model.droids.strategy;
+package main.java.com.gmail.violentoleg.droid.battles.game.model.droids.strategy;
 
-import com.gmail.violentoleg.droid.battles.game.model.droids.Defending;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.Defending;
 
 import static java.lang.Math.random;
 
-public class SelfHealDroidDefenceStrategy implements Defending {
+public class HealDefence implements Defending {
 
     private static final int HEAL_CHANCE_PERCENTS = 10;
 
@@ -15,10 +15,11 @@ public class SelfHealDroidDefenceStrategy implements Defending {
 
     @Override
     public int reduceIncomingDamage(int damage) {
-        return isHealApply() ? -damage : damage;
+        return isDefenceApply() ? -damage : damage;
     }
 
-    private boolean isHealApply() {
+    @Override
+    public boolean isDefenceApply() {
         int healChance = (int) (random() * (100 / HEAL_CHANCE_PERCENTS));
         return healChance == 0;
     }

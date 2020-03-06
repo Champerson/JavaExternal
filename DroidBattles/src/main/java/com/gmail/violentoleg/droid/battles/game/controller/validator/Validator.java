@@ -1,4 +1,4 @@
-package com.gmail.violentoleg.droid.battles.game.controller.validator;
+package main.java.com.gmail.violentoleg.droid.battles.game.controller.validator;
 
 
 import java.util.regex.Matcher;

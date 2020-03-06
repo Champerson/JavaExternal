@@ -1,20 +1,18 @@
-package com.gmail.violentoleg.droid.battles.game.dao;
+package main.java.com.gmail.violentoleg.droid.battles.game.dao;
 
-import com.gmail.violentoleg.droid.battles.game.model.Duel;
-import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
-import com.gmail.violentoleg.droid.battles.game.model.droids.JuggernautDroid;
-import com.gmail.violentoleg.droid.battles.game.model.droids.SlayerDroid;
-import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+
+import main.java.com.gmail.violentoleg.droid.battles.game.model.Duel;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.JuggernautDroid;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.SlayerDroid;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.String.format;
-
 public class DuelDao {
 
     private List<Duel> allDuels = new ArrayList<>() {{
-        add(new Duel(new JuggernautDroid(430, 40), new SlayerDroid(350, 60)));
+        add(new Duel(new JuggernautDroid(800, 30), new SlayerDroid(350, 60)));
     }};
 
     public void createNewDuel(Droid firstParticipant, Droid secondParticipant) {

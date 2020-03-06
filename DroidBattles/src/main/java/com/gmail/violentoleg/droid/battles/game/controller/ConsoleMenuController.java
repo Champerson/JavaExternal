@@ -1,31 +1,32 @@
-package com.gmail.violentoleg.droid.battles.game.controller;
+package main.java.com.gmail.violentoleg.droid.battles.game.controller;
 
 
-import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
-import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
-import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
-import com.gmail.violentoleg.droid.battles.game.model.UserRole;
-import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.UserDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.UserRole;
+import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import static com.gmail.violentoleg.droid.battles.game.model.UserRole.*;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static main.java.com.gmail.violentoleg.droid.battles.game.model.UserRole.*;
 
 public class ConsoleMenuController {
 
-    private UserDao userDao = new UserDao();
-    private DroidDao droidDao = new DroidDao();
-    private ConsoleView consoleView = new ConsoleView();
     private DuelDao duelDao = new DuelDao();
+    private UserDao userDao = new UserDao();
+    private ConsoleView consoleView = new ConsoleView();
+    private DroidDao droidDao = new DroidDao(consoleView);
     private Scanner userInputScanner = new Scanner(System.in);
-    private DroidController droidController = new DroidController(droidDao);
-    private MessagesController messagesController = new MessagesController(consoleView);
     private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
+    private MessagesController messagesController = new MessagesController(consoleView);
+    private DroidController droidController = new DroidController(droidDao, consoleView);
     private UserController userController = new UserController(messagesController, consoleView, userDao, duelDao);
     private DuelController duelController = new DuelController(messagesController, consoleView, duelDao, droidDao);
     private AdminController adminController = new AdminController(messagesController, consoleView, droidDao, duelDao);
@@ -48,9 +49,10 @@ public class ConsoleMenuController {
         F(ADMIN, GUEST),
         G(USER, GUEST),
         U(ADMIN, GUEST),
-        B(GUEST, USER),
+        B(USER, GUEST),
         J(GUEST),
-        K(GUEST);
+        K(GUEST),
+        N(USER, GUEST);
 
         private UserRole[] restrictions;
 
@@ -156,6 +158,9 @@ public class ConsoleMenuController {
             case K:
                 openMaxHealthDroidForm();
                 break;
+            case N:
+                openCreateNewDroidForm();
+                break;
         }
     }
 
@@ -164,11 +169,16 @@ public class ConsoleMenuController {
     }
 
     private void openAllDroidsInfo() {
-        duelController.showAllDroids();
+        droidController.showAllDroids();
     }
 
     private void openAllDuelsInfo() {
         duelController.showAllDuels();
+    }
+
+    private void openCreateNewDroidForm() {
+        String userInput = getUserInputWithLabel("admin.form.create.droid.label");
+        droidDao.createNewDroid(userInput);
     }
 
     private void openChangeCountryLanguageForm() {
@@ -240,10 +250,6 @@ public class ConsoleMenuController {
         duelController.registerDuel(parseUserInput(userInputFirstDroidNumber), parseUserInput(userInputSecondDroidNumber));
     }
 
-    private int parseUserInput(String userInput) {
-        return Integer.parseInt(userInput);
-    }
-
     private void openRemoveDuelForm() {
         String userInputDuelNumber = getUserInputWithLabel("duel.number.label");
         duelController.removeDuel(duelDao.getDuel(parseUserInput(userInputDuelNumber)));
@@ -256,16 +262,19 @@ public class ConsoleMenuController {
     }
 
     private void openMaxHealthDroidForm() {
-        consoleView.showMessage(droidController.findDroidWithByHealth().toString());
+        consoleView.showMessage(droidController.findDroidWithMaxHealth().toString());
     }
 
     private void openMaxDamageDroidForm() {
-        consoleView.showMessage(droidController.findDroidByMaxDamage().toString());
+        consoleView.showMessage(droidController.findDroidWithMaxDamage().toString());
     }
 
     private void openSortAllDroidsForm() {
         droidController.sortAllDroidsByHealth();
-        droidController.showAllSortedDroids();
+    }
+
+    private int parseUserInput(String userInput) {
+        return Integer.parseInt(userInput);
     }
 
     private String getUserInputWithLabel(String key) {

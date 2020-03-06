@@ -1,11 +1,12 @@
-package com.gmail.violentoleg.droid.battles.game.model.droids;
+package main.java.com.gmail.violentoleg.droid.battles.game.model.droids;
 
-import com.gmail.violentoleg.droid.battles.game.model.droids.strategy.JuggernautDroidDefenceStrategy;
+
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.strategy.BlockDefence;
 
 public class JuggernautDroid extends Droid {
 
 
     public JuggernautDroid(int health, int damage) {
-        super(health, damage, new JuggernautDroidDefenceStrategy());
+        super(health, damage, new BlockDefence());
     }
 }

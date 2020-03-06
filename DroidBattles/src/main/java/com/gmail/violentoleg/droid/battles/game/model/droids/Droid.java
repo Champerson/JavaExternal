@@ -1,21 +1,25 @@
-package com.gmail.violentoleg.droid.battles.game.model.droids;
+package main.java.com.gmail.violentoleg.droid.battles.game.model.droids;
 
-import com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DamageCalculationStrategy;
+
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DamageCalculation;
+
+import java.io.Serializable;
 
 import static java.lang.Math.max;
 
-public abstract class Droid {
+public abstract class Droid implements Serializable {
 
     private int health;
     private int damage;
     private Engine engine;
-    private DamageCalculationStrategy damageCalculationStrategy;
+    private DamageCalculation damageCalculation;
+    private static final long serialVersionUID = 1L;
 
-    public Droid(int health, int damage, DamageCalculationStrategy damageCalculationStrategy) {
+    public Droid(int health, int damage, DamageCalculation damageCalculation) {
         this.health = health;
         this.damage = damage;
         this.engine = new Engine();
-        this.damageCalculationStrategy = damageCalculationStrategy;
+        this.damageCalculation = damageCalculation;
     }
 
     public class Engine {
@@ -37,11 +41,11 @@ public abstract class Droid {
     }
 
     public void giveDamage(Droid droidRecipient) {
-        droidRecipient.takeDamage(damageCalculationStrategy.calculateDamage(this.getDamage()));
+        droidRecipient.takeDamage(damageCalculation.calculateDamage(this.getDamage()));
     }
 
     public void takeDamage(int damage) {
-        this.health = max(0, this.health - damageCalculationStrategy.reduceIncomingDamage(damage));
+        this.health = max(0, this.health - damageCalculation.reduceIncomingDamage(damage));
     }
 
     @Override

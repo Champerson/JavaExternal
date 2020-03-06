@@ -1,10 +1,13 @@
-package com.gmail.violentoleg.droid.battles.game.model.droids;
+package main.java.com.gmail.violentoleg.droid.battles.game.model.droids;
 
-import com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DamageCalculationStrategy;
 
-public interface Attacking extends DamageCalculationStrategy {
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DamageCalculation;
+
+public interface Attacking extends DamageCalculation {
 
     int calculateDamage(int damage);
 
     int reduceIncomingDamage(int damage);
+
+    boolean isAttackApply();
 }

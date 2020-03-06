@@ -1,11 +1,11 @@
-package com.gmail.violentoleg.droid.battles.game.controller;
+package main.java.com.gmail.violentoleg.droid.battles.game.controller;
 
 
-import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
-import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
-import com.gmail.violentoleg.droid.battles.game.model.Duel;
-import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
-import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.Duel;
+import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
+import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 public class AdminController {
 
