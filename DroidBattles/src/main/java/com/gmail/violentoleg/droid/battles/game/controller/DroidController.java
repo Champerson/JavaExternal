@@ -1,10 +1,9 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.controller;
+package com.gmail.violentoleg.droid.battles.game.controller;
 
 
-import main.java.com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
-import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
-import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.SimpleDroid;
-import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
+import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
+import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import java.util.ArrayList;
 import java.util.Comparator;

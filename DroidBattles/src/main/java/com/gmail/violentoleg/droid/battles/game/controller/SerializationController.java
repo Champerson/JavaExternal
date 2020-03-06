@@ -1,7 +1,7 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.controller;
+package com.gmail.violentoleg.droid.battles.game.controller;
 
-import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
-import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+import com.gmail.violentoleg.droid.battles.game.model.droids.Droid;
+import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import java.io.*;
 
@@ -18,7 +18,7 @@ public class SerializationController {
             FileOutputStream fileOutputStream = new FileOutputStream(f);
             if (fileOutputStream != null) {
                 objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                objectOutputStream.writeObject(droid); // сериализация
+                objectOutputStream.writeObject(droid); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 flag = true;
             }
         } catch (FileNotFoundException e) {

@@ -1,4 +1,4 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.viewer;
+package com.gmail.violentoleg.droid.battles.game.viewer;
 
 public class ConsoleView {
 

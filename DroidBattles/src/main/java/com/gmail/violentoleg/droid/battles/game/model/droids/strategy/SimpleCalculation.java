@@ -1,4 +1,4 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.model.droids.strategy;
+package com.gmail.violentoleg.droid.battles.game.model.droids.strategy;
 
 
 public class SimpleCalculation implements DamageCalculation {

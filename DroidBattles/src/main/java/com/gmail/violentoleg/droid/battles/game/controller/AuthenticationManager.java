@@ -1,8 +1,8 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.controller;
+package com.gmail.violentoleg.droid.battles.game.controller;
 
 
-import main.java.com.gmail.violentoleg.droid.battles.game.dao.UserDao;
-import main.java.com.gmail.violentoleg.droid.battles.game.model.UserRole;
+import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
+import com.gmail.violentoleg.droid.battles.game.model.UserRole;
 
 import java.util.List;
 

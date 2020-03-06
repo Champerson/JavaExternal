@@ -1,15 +1,15 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.controller;
+package com.gmail.violentoleg.droid.battles.game.controller;
 
 
-import main.java.com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
-import main.java.com.gmail.violentoleg.droid.battles.game.dao.UserDao;
-import main.java.com.gmail.violentoleg.droid.battles.game.model.Duel;
-import main.java.com.gmail.violentoleg.droid.battles.game.model.User;
-import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
+import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
+import com.gmail.violentoleg.droid.battles.game.model.Duel;
+import com.gmail.violentoleg.droid.battles.game.model.User;
+import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
+import static com.gmail.violentoleg.droid.battles.game.controller.validator.Validator.validateCredentials;
+import static com.gmail.violentoleg.droid.battles.game.model.UserRole.USER;
 import static java.lang.String.format;
-import static main.java.com.gmail.violentoleg.droid.battles.game.controller.validator.Validator.validateCredentials;
-import static main.java.com.gmail.violentoleg.droid.battles.game.model.UserRole.USER;
 
 public class UserController {
 

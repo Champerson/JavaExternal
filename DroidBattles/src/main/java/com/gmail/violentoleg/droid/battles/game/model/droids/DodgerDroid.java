@@ -1,7 +1,7 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.model.droids;
+package com.gmail.violentoleg.droid.battles.game.model.droids;
 
 
-import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DodgeDefence;
+import com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DodgeDefence;
 
 public class DodgerDroid extends Droid {
 

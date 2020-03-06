@@ -1,7 +1,7 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.model.droids;
+package com.gmail.violentoleg.droid.battles.game.model.droids;
 
 
-import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DamageCalculation;
+import com.gmail.violentoleg.droid.battles.game.model.droids.strategy.DamageCalculation;
 
 import java.io.Serializable;
 

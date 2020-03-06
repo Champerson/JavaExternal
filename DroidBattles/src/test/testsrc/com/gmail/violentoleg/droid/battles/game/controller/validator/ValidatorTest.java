@@ -1,4 +1,4 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.controller.validator;
+package com.gmail.violentoleg.droid.battles.game.controller.validator;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,12 +17,6 @@ public class ValidatorTest {
         Assert.assertFalse(emptyValues);
     }
 
-    @Test
-    public void validateCredentialsNullValues() {
-        boolean nullValues = Validator.validateCredentials(null, null);
-        Assert.assertFalse(nullValues);
-    }
-    
     @Test
     public void validateCredentialsIncorrect() {
         boolean regexTest = Validator.validateCredentials("LOGIN@PASS_@!#", "PASSS@!(#HRNF 32");

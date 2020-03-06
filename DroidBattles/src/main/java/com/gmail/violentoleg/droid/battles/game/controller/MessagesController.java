@@ -1,7 +1,7 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.controller;
+package com.gmail.violentoleg.droid.battles.game.controller;
 
 
-import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
@@ -22,7 +22,7 @@ public class MessagesController {
 
     public String getProperty(String key) {
         try {
-            return new String(resourceBundle.getString(key).getBytes("cp1251"));
+            return new String(resourceBundle.getString(key).getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

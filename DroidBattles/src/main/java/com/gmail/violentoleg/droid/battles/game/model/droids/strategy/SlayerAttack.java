@@ -1,6 +1,7 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.model.droids.strategy;
+package com.gmail.violentoleg.droid.battles.game.model.droids.strategy;
 
-import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.Attacking;
+
+import com.gmail.violentoleg.droid.battles.game.model.droids.Attacking;
 
 import static java.lang.Math.random;
 

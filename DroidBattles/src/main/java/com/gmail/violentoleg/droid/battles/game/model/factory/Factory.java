@@ -1,8 +1,7 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.model.factory;
+package com.gmail.violentoleg.droid.battles.game.model.factory;
 
 
-import main.java.com.gmail.violentoleg.droid.battles.game.model.droids.*;
-
+import com.gmail.violentoleg.droid.battles.game.model.droids.*;
 
 public class Factory {
 
@@ -27,24 +26,20 @@ public class Factory {
     }
 
     public Droid droidFactory(String typeOfDroid) {
-        Droid factoryDroid = null;
-
-        if (typeOfDroid.isEmpty()) {
-            return null;
-        } else if (typeOfDroid.equalsIgnoreCase("juggernaut")) {
-            factoryDroid = createJuggernautDroid();
-        } else if (typeOfDroid.equalsIgnoreCase("simple")) {
-            factoryDroid = createSimpleDroid();
-        } else if (typeOfDroid.equalsIgnoreCase("slayer")) {
-            factoryDroid = createSlayerDroid();
-        } else if (typeOfDroid.equalsIgnoreCase("healer")) {
-            factoryDroid = createSelfHealDroid();
-        } else if (typeOfDroid.equalsIgnoreCase("dodger")) {
-            factoryDroid = createDodgerDroid();
+        switch (typeOfDroid) {
+            case "juggernaut":
+                return createJuggernautDroid();
+            case "simple":
+                return createSimpleDroid();
+            case "slayer":
+                return createSlayerDroid();
+            case "healer":
+                return createSelfHealDroid();
+            case "dodger":
+                return createDodgerDroid();
         }
 
-        return factoryDroid;
+        return null;
     }
 }
-
 

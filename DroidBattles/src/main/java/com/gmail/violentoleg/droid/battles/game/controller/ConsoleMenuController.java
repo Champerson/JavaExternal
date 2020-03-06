@@ -1,21 +1,20 @@
-package main.java.com.gmail.violentoleg.droid.battles.game.controller;
+package com.gmail.violentoleg.droid.battles.game.controller;
 
 
-
-import main.java.com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
-import main.java.com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
-import main.java.com.gmail.violentoleg.droid.battles.game.dao.UserDao;
-import main.java.com.gmail.violentoleg.droid.battles.game.model.UserRole;
-import main.java.com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
+import com.gmail.violentoleg.droid.battles.game.dao.DroidDao;
+import com.gmail.violentoleg.droid.battles.game.dao.DuelDao;
+import com.gmail.violentoleg.droid.battles.game.dao.UserDao;
+import com.gmail.violentoleg.droid.battles.game.model.UserRole;
+import com.gmail.violentoleg.droid.battles.game.viewer.ConsoleView;
 
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import static com.gmail.violentoleg.droid.battles.game.model.UserRole.*;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
-import static main.java.com.gmail.violentoleg.droid.battles.game.model.UserRole.*;
 
 public class ConsoleMenuController {
 
