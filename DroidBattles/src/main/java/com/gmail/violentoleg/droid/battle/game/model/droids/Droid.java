@@ -15,6 +15,10 @@ public abstract class Droid implements Serializable {
     private DamageCalculation damageCalculation;
     private static final long serialVersionUID = 1L;
 
+    public Droid() {
+
+    }
+
     public Droid(int health, int damage, DamageCalculation damageCalculation) {
         this.health = health;
         this.damage = damage;

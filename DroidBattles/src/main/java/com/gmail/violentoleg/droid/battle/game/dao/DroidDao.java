@@ -5,14 +5,19 @@ import com.gmail.violentoleg.droid.battle.game.model.droids.*;
 import com.gmail.violentoleg.droid.battle.game.model.factory.Factory;
 import com.gmail.violentoleg.droid.battle.game.viewer.ConsoleView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class DroidDao {
+public class DroidDao implements Serializable {
 
-    private Factory droidFactory;
-    private ConsoleView consoleView;
+    private transient Factory droidFactory;
+    private transient ConsoleView consoleView;
+
+    public DroidDao() {
+
+    }
 
     public DroidDao(ConsoleView consoleView) {
         this.consoleView = consoleView;
@@ -32,7 +37,7 @@ public class DroidDao {
         if (createdDroid == null) {
             consoleView.showError("Invalid input!");
         } else {
-            allDroids.add(droidFactory.droidFactory(userInputDroid));
+            allDroids.add(createdDroid);
         }
     }
 

@@ -5,11 +5,13 @@ import com.gmail.violentoleg.droid.battle.game.dao.DroidDao;
 import com.gmail.violentoleg.droid.battle.game.dao.DuelDao;
 import com.gmail.violentoleg.droid.battle.game.dao.UserDao;
 import com.gmail.violentoleg.droid.battle.game.model.UserRole;
+import com.gmail.violentoleg.droid.battle.game.model.droids.Droid;
 import com.gmail.violentoleg.droid.battle.game.model.exceptions.InvalidInputTypeException;
 import com.gmail.violentoleg.droid.battle.game.viewer.ConsoleView;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.io.InvalidObjectException;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +33,7 @@ public class ConsoleMenuController {
     private AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
     private MessagesController messagesController = new MessagesController(consoleView);
     private DroidController droidController = new DroidController(droidDao, consoleView);
+    private SerializationController serializationController = new SerializationController(droidDao);
     private UserController userController = new UserController(messagesController, consoleView, userDao, duelDao);
     private DuelController duelController = new DuelController(messagesController, consoleView, duelDao, droidDao);
     private AdminController adminController = new AdminController(messagesController, consoleView, droidDao, duelDao);
@@ -57,7 +60,8 @@ public class ConsoleMenuController {
         J(GUEST),
         K(GUEST),
         N(USER, GUEST),
-        P(USER, GUEST);
+        P(USER, GUEST),
+        Y(USER, GUEST);
 
         private UserRole[] restrictions;
 
@@ -71,21 +75,21 @@ public class ConsoleMenuController {
 
     }
 
-    public void openMainMenu() throws InvalidInputTypeException {
+    public void openMainMenu() throws InvalidInputTypeException, ClassNotFoundException, InvalidObjectException {
         UserRole userAccess = userController.getCurrentUser().getRole();
         consoleView.showMessage(format(messagesController.getProperty("menu.options.description"), userAccess));
         validateCommand();
         openMainMenu();
     }
 
-    private void openAdminMenu() throws InvalidInputTypeException {
+    private void openAdminMenu() throws InvalidInputTypeException, ClassNotFoundException, InvalidObjectException {
         UserRole userAccess = userController.getCurrentUser().getRole();
         consoleView.showMessage(format(messagesController.getProperty("admin.settings.menu.title"), userAccess));
         validateCommand();
         openAdminMenu();
     }
 
-    private void openUserMenu() throws InvalidInputTypeException {
+    private void openUserMenu() throws InvalidInputTypeException, ClassNotFoundException, InvalidObjectException {
         UserRole userAccess = userController.getCurrentUser().getRole();
         consoleView.showMessage(format(messagesController.getProperty("user.menu.title"), userAccess));
         validateCommand();
@@ -101,7 +105,7 @@ public class ConsoleMenuController {
         }
     }
 
-    private void executeCommand(Command command) throws InvalidInputTypeException {
+    private void executeCommand(Command command) throws InvalidInputTypeException, InvalidObjectException, ClassNotFoundException {
         switch (command) {
             case E:
                 exit();
@@ -168,6 +172,8 @@ public class ConsoleMenuController {
                 break;
             case P:
                 openRemoveDroidForm();
+            case Y:
+                openSerializationForm();
         }
     }
 
@@ -232,7 +238,7 @@ public class ConsoleMenuController {
         return new AbstractMap.SimpleEntry<>(inputLogin, inputPassword);
     }
 
-    private void back() throws InvalidInputTypeException {
+    private void back() throws InvalidInputTypeException, ClassNotFoundException, InvalidObjectException {
         openMainMenu();
     }
 
@@ -281,6 +287,12 @@ public class ConsoleMenuController {
         consoleView.showMessage(droidController.findDroidWithMaxDamage().toString());
     }
 
+    private void openSerializationForm() throws InvalidObjectException {
+        serializationController.serializeDroidList();
+        List<Droid> arrayList = serializationController.deserializeDroidsList();
+        System.out.println(arrayList.size());
+    }
+
     private void openSortAllDroidsForm() {
         droidController.sortAllDroidsByHealth();
     }
@@ -299,7 +311,7 @@ public class ConsoleMenuController {
         return userInputScanner.nextLine();
     }
 
-    private void validateCommand() throws InvalidInputTypeException {
+    private void validateCommand() throws InvalidInputTypeException, InvalidObjectException, ClassNotFoundException {
         String userInput = userInputScanner.nextLine().toUpperCase();
         Command command = getUserInputAsCommand(userInput);
         if (command == null) {

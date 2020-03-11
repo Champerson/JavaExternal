@@ -1,6 +1,8 @@
 package com.gmail.violentoleg.droid.battle.game.model.droids.strategy;
 
-public interface DamageCalculation {
+import java.io.Serializable;
+
+public interface DamageCalculation extends Serializable {
 
     int calculateDamage(int damage);
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class SerializationController {
 
     private static final Logger LOGGER = LogManager.getLogger(SerializationController.class);
-    private static final String DROID_SERIALIZATION_PATH = "src/main/resources/SerializedDroids.bin";
+    private static final String DROID_SERIALIZATION_PATH = "C:\\Users\\champer\\IdeaProjects\\JavaExternal\\DroidBattles\\src\\main\\SerializedDroids.bin";
 
     private DroidDao droidDao;
 
@@ -21,7 +21,7 @@ public class SerializationController {
         this.droidDao = droidDao;
     }
 
-    public void serializeDroid() {
+    public void serializeDroidList() {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File(DROID_SERIALIZATION_PATH)))) {
             objectOutputStream.writeObject(droidDao.getAllDroids());
             objectOutputStream.flush();
@@ -30,12 +30,12 @@ public class SerializationController {
         }
     }
 
-    private List<Droid> deserializeDroidsList() {
+    public List<Droid> deserializeDroidsList() throws InvalidObjectException {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(new File(DROID_SERIALIZATION_PATH)))) {
             return (ArrayList<Droid>) objectInputStream.readObject();
         } catch (ClassNotFoundException | IOException exc) {
             LOGGER.warn(exc);
         }
-        return null;
+        throw new InvalidObjectException("Object not repaired");
     }
 }
